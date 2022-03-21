@@ -1,9 +1,13 @@
 import React from "react";
+import AppRouter from "./Router/AppRouter";
+import { Navigation, Footer } from "./Components/UI";
 
 const App = () => {
   return (
     <div className="main-container">
-      <h1>hello</h1>
+      <Navigation />
+        <AppRouter />
+      <Footer />
     </div>
   );
 };
