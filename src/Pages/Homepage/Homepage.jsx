@@ -1,5 +1,3 @@
-import { Navigation, Footer } from "../../Components/UI/";
-
 const Homepage = () => {
   return (
     <>
