@@ -53,7 +53,7 @@ function Eye(props) {
   );
 }
 
-export function EyeClose(props) {
+function EyeClose(props) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 256 256" {...props}>
       <path
