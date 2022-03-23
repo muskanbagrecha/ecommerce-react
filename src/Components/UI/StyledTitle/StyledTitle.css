@@ -19,3 +19,16 @@
     height: 5px;
     background: var(--color-primary);
 }
+
+@media screen and (max-width: 800px) {
+    .styled-title {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .styled-title {
+        font-size: 1.75rem;
+        margin: 2rem auto 3rem;
+    }
+}
