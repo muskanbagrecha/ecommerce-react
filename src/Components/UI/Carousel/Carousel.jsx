@@ -18,13 +18,12 @@ const Carousel = ({ brandData }) => {
       : setCurrentIndex(currentIndex - 1);
   };
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     nextSlide();
-  //   }, 7000);
-  // }, []);
-
- 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 2000);
+    return () => clearInterval(interval);
+  }, [currentIndex]);
 
   return (
     <section className="carousel">

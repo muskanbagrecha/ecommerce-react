@@ -5,7 +5,7 @@ import {
   Banner,
   Testimonial,
 } from "../../Components/Homepage";
-import { Carousel, StyledTitle, Section } from "../../Components/UI";
+import { Carousel, Section } from "../../Components/UI";
 import brandData from "../../backend/db/brands";
 import testimonialData from "../../backend/db/testimonial";
 
@@ -15,12 +15,12 @@ const Homepage = () => {
       <div className="sub-container">
         <Hero />
         <CategorySection />
-        <StyledTitle title="Featured Products" />
+        <h1 className="styled-title">Featured Products</h1>
         <Section></Section>
         <Banner />
-        <StyledTitle title="Featured Brands" />
+        <h1 className="styled-title">Featured Brands</h1>
         <Carousel brandData={brandData} />
-        <StyledTitle title="Customer Testimonials" />
+        <h1 className="styled-title">Customer Testimonials</h1>
         <Section>
           <Testimonial testimonialData={testimonialData} />
         </Section>

@@ -8,7 +8,7 @@ const useFetch = ({ url, method, ...rest }) => {
 
   useEffect(() => {
     setLoading(true);
-    const fetchData = async () => {
+    (async () => {
       try {
         const response = await axios({
           url,
@@ -25,9 +25,7 @@ const useFetch = ({ url, method, ...rest }) => {
         setError(err);
         setLoading(false);
       }
-    };
-
-    fetchData();
+    })();
   }, [url, method]);
 
   return { data, error, loading };

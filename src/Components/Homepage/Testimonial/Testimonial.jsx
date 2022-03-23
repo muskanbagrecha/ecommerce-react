@@ -6,7 +6,7 @@ const Testimonial = ({ testimonialData }) => {
       <div className="testimonial__profile">
         <img
           src={testimonial.image}
-          alt="testimonial"
+          alt={testimonial.name}
           className="img-responsive"
         />
       </div>
