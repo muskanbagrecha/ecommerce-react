@@ -33,6 +33,10 @@ footer{
     grid-area: footer;
 }
 
+.btn {
+    padding: 15px initial;
+}
+
 button.btn-link-text {
   border: none;
   background: none;

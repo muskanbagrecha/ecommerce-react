@@ -41,6 +41,7 @@
 
 .navigation {
     position: fixed;
+    z-index: 15;
 }
 
 .user-icon {
