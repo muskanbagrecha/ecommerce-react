@@ -1,6 +1,4 @@
-import {
-  v4 as uuid
-} from "uuid";
+import { v4 as uuid } from "uuid";
 /**
  * Category Database can be added here.
  * You can add category of your wish with different attributes
@@ -14,7 +12,8 @@ import {
   jewellery,
 } from "../../Assets/Images/image";
 
-export const categories = [{
+export const categories = [
+  {
     _id: uuid(),
     categoryName: "Women",
     imageUrl: women,

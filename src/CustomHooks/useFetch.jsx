@@ -27,8 +27,8 @@ const useFetch = ({ url, method, ...rest }) => {
       }
     })();
   }, [url, method]);
-
+  console.log("returning", data);
   return { data, error, loading };
 };
 
-export default useFetch;
+export { useFetch };

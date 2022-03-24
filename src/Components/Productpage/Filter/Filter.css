@@ -1,0 +1,60 @@
+/* Filter styling */
+
+.filter__container hr {
+    margin: 0.8rem auto;
+    border: 1px solid #ddd;
+}
+
+.filter__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+}
+
+.filter__header .filter__main-title {
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--color-dark);
+    font-family: "Roboto", sans-serif;
+    cursor: pointer;
+}
+
+.filter__section {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem;
+}
+
+.filter__section fieldset {
+    display: flex;
+    flex-direction: column;
+    border: 0;
+    padding: 1rem 0;
+}
+
+.filter__section .filter__section-title {
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--color-dark);
+}
+
+.filter__section input[type="radio"],
+.filter__section input[type="checkbox"] {
+    margin-right: 0.8rem;
+    cursor: pointer;
+}
+
+.filter__button{
+    background-color: transparent;
+    border: 0;
+}
+
+.filter--active {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.5rem;
+}

@@ -1,0 +1,22 @@
+.pagination {
+    display: block;
+    width: 100%;
+    margin-top: 3rem;
+    text-align: center;
+}
+  
+.pagination a {
+    color: var(--color-complementary);
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.pagination a.active{
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+.pagination a:hover:not(.active) {
+    background-color: rgba(var(--color-complementary-values), 0.1);
+}
