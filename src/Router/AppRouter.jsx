@@ -7,7 +7,7 @@ import Wishlistpage from "../Pages/Wishlistpage/Wishlistpage";
 import Loginpage from "../Pages/Loginpage/Loginpage";
 import Signuppage from "../Pages/Signuppage/Signuppage";
 import Userpage from "../Pages/Userpage/Userpage";
-import NotFound from "../Pages/NotFound";
+import NotFound from "../Pages/NotFound/NotFound";
 import Blogpage from "../Pages/Blogpage/Blog";
 
 const AppRouter = () => {

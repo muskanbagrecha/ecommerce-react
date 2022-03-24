@@ -64,4 +64,26 @@ function EyeClose(props) {
   );
 }
 
-export { Search, Cart, Wishlist, User, Eye, EyeClose };
+function LeftArrow(props) {
+  return (
+    <svg width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+      <path
+        fill="currentColor"
+        d="M11.67 3.87L9.9 2.1L0 12l9.9 9.9l1.77-1.77L3.54 12z"
+      ></path>
+    </svg>
+  );
+}
+
+function RightArrow(props) {
+  return (
+    <svg width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+      <path
+        fill="currentColor"
+        d="M6.23 20.23L8 22l10-10L8 2L6.23 3.77L14.46 12z"
+      ></path>
+    </svg>
+  );
+}
+
+export { Search, Cart, Wishlist, User, Eye, EyeClose, LeftArrow, RightArrow };

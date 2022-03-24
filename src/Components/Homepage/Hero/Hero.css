@@ -1,0 +1,106 @@
+/* Hero */
+
+.hero {
+    height: 30vh;
+    min-height: 20rem;
+    position: relative;
+    background: url("../../../Assets/Images/Banner/purple-banner.jpg") no-repeat center center/cover;
+}
+
+.hero__content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero__heading {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    text-align: center;
+    text-transform: uppercase;
+    perspective: 500px;
+    margin: auto;
+}
+
+.hero__heading span {
+    text-shadow: 0.3rem 0.3rem 0.6rem rgba(0, 0, 0, 0.5);
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    transform: translateZ(8rem);
+    opacity: 0;
+    color: var(--color-dark);
+}
+
+.hero__content .btn {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.hero__content .btn:hover {
+    background: var(--color-primary);
+    color: var(--color-light);
+}
+
+.hero .btn:hover {
+    color: var(--color-light);
+    background: transparent;
+    border: 2px solid var(--color-dark);
+}
+
+.heading-1 {
+    animation: animateHeading 12s 1s infinite;
+}
+
+.heading-2 {
+    animation: animateHeading 12s 4s infinite;
+}
+
+.heading-3 {
+    animation: animateHeading 12s 7s infinite;
+}
+
+.heading-4 {
+    animation: animateHeading 12s 10s infinite;
+}
+
+.navigation-full{
+    font-size: 1.3rem;
+}
+
+@keyframes animateHeading {
+    0% {
+        transform: translateZ(8rem);
+        opacity: 0;
+        letter-spacing: 1.6rem;
+    }
+
+    3% {
+        transform: translateZ(0);
+        opacity: 1;
+        letter-spacing: 0.8rem;
+    }
+
+    25% {
+        transform: translateZ(0);
+        opacity: 1;
+        letter-spacing: 0.8rem;
+    }
+
+    28% {
+        transform: translateZ(8rem);
+        opacity: 0;
+        letter-spacing: 1.6rem;
+    }
+
+    100% {
+        transform: translateZ(8rem);
+        opacity: 0;
+        letter-spacing: 1.6rem;
+    }
+}
