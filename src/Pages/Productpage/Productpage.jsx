@@ -31,7 +31,6 @@ const Productpage = () => {
           method: "GET",
         });
         if (response.status === 200 || response.status === 201) {
-          console.log("2")
           setProducts(response.data.products);
           filterDispatch({ type: "SET_ITEMS", payload: response.data.products});
           setLoading(false);
@@ -97,11 +96,9 @@ const Productpage = () => {
     const dataByRating = filterByRating(dataByPriceRange);
     const dataByStock = filterByStock(dataByRating);
     const dataBySearch = filterBySearch(dataByStock);
-    console.log("1")
     setProducts(dataBySearch);
   }, [filterState]);
 
-  console.log("products", products);
   return (
     <div className="sub-container product__main-container">
       <Filter />

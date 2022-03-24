@@ -1,9 +1,20 @@
+import { useNavigate } from "react-router-dom";
+import { useFilter } from "../../../CustomHooks/useFilter";
 import "./CategoryItem.css";
 
 const CategoryItem = ({ title, src }) => {
+
+  const navigate = useNavigate();
+  const { filterDispatch } = useFilter();
+
   return (
-    <div className="category-item">
-      <div
+    <div
+      className="category-item"
+      onClick={() => {
+        filterDispatch({ type: "ADD_CATEGORY", payload: title });
+        navigate("/products");
+      }}
+    >      <div
         className="category--background"
         style={{ backgroundImage: `url(${src})` }}
       ></div>

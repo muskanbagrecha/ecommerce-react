@@ -1,4 +1,3 @@
-import Pagination from "../../../Utils/Pagination.jsx";
 import Product from "./Product";
 import { useState } from "react";
 import { useEffect } from "react";
