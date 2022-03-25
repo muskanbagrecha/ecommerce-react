@@ -13,7 +13,7 @@ const Productpage = () => {
   const [error, setError] = useState(null);
   const { filterState, filterDispatch } = useFilter();
 
-  // fetch products
+  // fetch products PS: This code will be uncommented in future
   // const { data, error, loading } = useFetch({
   //   url: "/api/products",
   //   method: "GET",
