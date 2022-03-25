@@ -20,7 +20,8 @@ const Homepage = () => {
         <Hero />
         <CategorySection />
         <h1 className="styled-title">Featured Products</h1>
-        {/* <Section>
+        {/* This will be uncommented in future PRs.
+        <Section>
           {featuredProducts &&
             featuredProducts.map((product) => (
               <Product key={product._id} product={product} />
