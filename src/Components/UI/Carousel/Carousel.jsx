@@ -29,13 +29,7 @@ const Carousel = ({ brandData }) => {
   }, [currentIndex]);
 
   return (
-    <section
-      className="carousel"
-      onClick={() => {
-        console.log("clicked");
-        navigate("/products");
-      }}
-    >
+    <section className="carousel">
       <LeftArrow className="arrow arrow--left" onClick={prevSlide} />
       <CarouselList data={brandData} currentIndex={currentIndex} />
       <RightArrow className="arrow arrow--right" onClick={nextSlide} />

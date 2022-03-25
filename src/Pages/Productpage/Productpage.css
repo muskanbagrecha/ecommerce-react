@@ -21,6 +21,7 @@
 .products__list-container{
     grid-area: products;
     padding: 3rem;
+    justify-content: center;
     display: flex;
     flex-wrap: wrap;
 }
@@ -40,7 +41,11 @@
         grid-template-areas:
             "results"
             "filter"
-            "products"
+            "products";
+    }
+
+    .products__list-container{
+        padding: 3rem 1rem;
     }
 
     .filter__container{

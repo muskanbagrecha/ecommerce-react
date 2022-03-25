@@ -8,14 +8,12 @@ import spinner from "../../Assets/loader";
 import "./Productpage.css";
 
 const Productpage = () => {
-
-
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { filterState, filterDispatch } = useFilter();
 
-   // fetch products
+  // fetch products
   // const { data, error, loading } = useFetch({
   //   url: "/api/products",
   //   method: "GET",
@@ -24,7 +22,7 @@ const Productpage = () => {
   // filterDispatch({ type: "SET_PRODUCTS", payload: data?.products });
 
   useEffect(() => {
-   const fetchData = async () => {
+    const fetchData = async () => {
       try {
         const response = await axios({
           url: "/api/products",
@@ -32,19 +30,20 @@ const Productpage = () => {
         });
         if (response.status === 200 || response.status === 201) {
           setProducts(response.data.products);
-          filterDispatch({ type: "SET_ITEMS", payload: response.data.products});
+          filterDispatch({
+            type: "SET_ITEMS",
+            payload: response.data.products,
+          });
           setLoading(false);
-        } else {
-          setError(response.statusText);
         }
       } catch (err) {
         setError(err);
         setLoading(false);
       }
-    }
+    };
     fetchData();
-  }, [])
-  
+  }, []);
+
   const filterByCategories = () => {
     if (filterState.categories.length > 0) {
       return filterState.items.filter((item) =>
