@@ -11,7 +11,10 @@ const CarouselList = ({ data, currentIndex }) => {
           }
         >
           {index === currentIndex ? (
-            <CarouselItem src={item.image} name={item.name} />
+            <CarouselItem
+              src={item.image}
+              name={item.name}
+            />
           ) : null}
         </div>
       ))}

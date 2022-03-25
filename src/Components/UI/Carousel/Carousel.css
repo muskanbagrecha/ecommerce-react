@@ -5,6 +5,7 @@
     justify-content: center;
     height: 30rem;
     width: auto;
+    cursor: pointer;
 }
 
 .carousel-img{

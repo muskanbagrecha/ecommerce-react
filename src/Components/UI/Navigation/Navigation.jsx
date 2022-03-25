@@ -1,14 +1,28 @@
 import React from "react";
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import "./Navigation.css";
-import logo from "../../../Assets/Images/logo.png";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Cart, User, Wishlist, Search } from "../../../Assets/Icons/icons";
+import { useFilter } from "../../../CustomHooks/useFilter";
+import logo from "../../../Assets/Images/logo.png";
+import "./Navigation.css";
+
 const Navigation = () => {
+  const { filterState, filterDispatch } = useFilter();
+
   //For responsiveness of navbar
   const [mobileNavActive, setMobileNavActive] = useState(false);
   const navActiveClass = mobileNavActive ? "navigation-full--active" : "";
   const burgerRotate = mobileNavActive ? "rotate" : "";
+
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    navigate("/products");
+    setSearch("");
+    filterDispatch({ type: "SEARCH", payload: search });
+  };
 
   return (
     <nav className={`navigation navigation-full ${navActiveClass}`}>
@@ -24,15 +38,17 @@ const Navigation = () => {
           <NavLink to="/products">Shop</NavLink>
         </li>
         <li>
-        <NavLink to="/blog">Blog</NavLink>
+          <NavLink to="/blog">Blog</NavLink>
         </li>
       </ul>
 
-      <form className="nav-search">
+      <form className="nav-search" onSubmit={onSubmitHandler}>
         <input
           type="search"
           placeholder="Search for products"
           className="input-styled"
+          onChange={(e) => setSearch(e.target.value)}
+          value={search}
         />
         <button className="btn-icon">
           <Search />

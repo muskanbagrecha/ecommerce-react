@@ -10,6 +10,9 @@ import gowns from "./Gowns/gowns.webp";
 import gowns1 from "./Gowns/gowns1.webp";
 import gowns2 from "./Gowns/gowns2.webp";
 import gowns3 from "./Gowns/gowns3.webp";
+import gowns4 from "./Gowns/gowns4.webp";
+import gowns5 from "./Gowns/gowns5.webp";
+import gowns6 from "./Gowns/gowns6.webp";
 import jewellery from "./Jewellery/jewellery.webp";
 import jewellery1 from "./Jewellery/jewellery1.webp";
 import jewellery2 from "./Jewellery/jewellery2.webp";
@@ -40,6 +43,9 @@ export {
   gowns1,
   gowns2,
   gowns3,
+  gowns4,
+  gowns5,
+  gowns6,
   jewellery,
   jewellery1,
   jewellery2,

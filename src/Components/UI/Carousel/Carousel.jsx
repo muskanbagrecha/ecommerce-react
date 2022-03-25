@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import CarouselList from "./CarouselList";
 import "./Carousel.css";
 import { LeftArrow, RightArrow } from "../../../Assets/Icons/icons";
 
 const Carousel = ({ brandData }) => {
+  const navigate = useNavigate();
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = () => {
@@ -21,7 +24,7 @@ const Carousel = ({ brandData }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
-    }, 2000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [currentIndex]);
 
