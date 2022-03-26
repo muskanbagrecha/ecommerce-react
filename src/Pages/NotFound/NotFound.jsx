@@ -4,7 +4,7 @@ const NotFound = (props) => {
   const navigate = useNavigate();
 
   return (
-    <div className="sub-container">
+    <div className="sub-container flex-col-center">
       <h1>404</h1>
       <p>Uh Oh, Page Not Found! :(</p>
       <button

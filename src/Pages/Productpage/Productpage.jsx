@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import { useFetch } from "../../CustomHooks/useFetch";
 import axios from "axios";
 import ProductList from "../../Components/Productpage/ProductListing/ProductList";
+import { LoginModal } from "../Loginpage/LoginModal";
+import { useModal } from "../../CustomHooks/useModal";
+import { Alert } from "../../Components/UI";
+import { useAlert } from "../../CustomHooks/useAlert";
 import spinner from "../../Assets/loader";
 import "./Productpage.css";
 
@@ -12,7 +16,7 @@ const Productpage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { filterState, filterDispatch } = useFilter();
-
+  const { showModal, setShowModal } = useModal();
   // fetch products PS: This code will be uncommented in future
   // const { data, error, loading } = useFetch({
   //   url: "/api/products",
@@ -112,6 +116,7 @@ const Productpage = () => {
           Showing results for - {filterState.search}
         </p>
       )}
+      {showModal && <LoginModal />}
     </div>
   );
 };

@@ -1,10 +1,13 @@
 import { Card } from "../../UI";
+import { useCart } from "../../../CustomHooks/useCart";
 import { OutlinedHeart, Cart } from "../../../Assets/Icons/icons";
 import "./Product.css";
 
 const Product = ({ product }) => {
+  const { title, subtitle, price, oldPrice, image, discount, inStock } =
+    product;
 
-  const {title, subtitle, price, oldPrice, image, discount, inStock} = product;
+  const { addToCart } = useCart();
 
   return (
     <Card className="card-vertical product-card">
@@ -15,11 +18,7 @@ const Product = ({ product }) => {
       </div>
       <div className={!inStock ? "overlay-container" : ""}>
         <div className="card__img">
-          <img
-            src={image}
-            alt={title}
-            className="img-responsive"
-          />
+          <img src={image} alt={title} className="img-responsive" />
         </div>
         <div className="card__content">
           <div className="card__header">
@@ -36,7 +35,7 @@ const Product = ({ product }) => {
           <div className="card__CTA center-text">
             <button
               className="btn btn-primary full-width"
-              //   onClick={() => addToCartHandler(product)}
+              onClick={() => addToCart(product)}
             >
               <span>Add to Cart</span>
               <Cart />

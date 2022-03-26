@@ -7,6 +7,7 @@ import Wishlistpage from "../Pages/Wishlistpage/Wishlistpage";
 import Loginpage from "../Pages/Loginpage/Loginpage";
 import Signuppage from "../Pages/Signuppage/Signuppage";
 import Userpage from "../Pages/Userpage/Userpage";
+import MockAPI from "../Pages/Mockapi/MockAPI";
 import NotFound from "../Pages/NotFound/NotFound";
 import Blogpage from "../Pages/Blogpage/Blog";
 
@@ -21,6 +22,7 @@ const AppRouter = () => {
       <Route path="/signup" element={<Signuppage />} />
       <Route path="/user" element={<Userpage />} />
       <Route path="/blog" element={<Blogpage />} />
+      <Route path="/mockapi" element={<MockAPI />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
