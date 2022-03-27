@@ -77,7 +77,6 @@ const Signupform = () => {
       if (response.status === 201) {
         setSignupDetails(intialState);
         authDispatch({ type: "SIGNUP", payload: response.data });
-        // localStorage.setItem("user", JSON.stringify(response.data));
         setShowAlert(true);
       }
     } catch (err) {
