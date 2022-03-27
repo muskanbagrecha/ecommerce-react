@@ -1,6 +1,6 @@
 import LoginForm from "./LoginForm";
 import { Modal } from "../../Components/UI/";
-import { useModal } from "../../CustomHooks/useModal";
+import { useModal } from "../../CustomHooks/";
 
 export const LoginModal = () => {
   const { setShowModal } = useModal();

@@ -2,8 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Cart, User, Wishlist, Search } from "../../../Assets/Icons/icons";
-import { useFilter } from "../../../CustomHooks/useFilter";
-import { useAuth } from "../../../CustomHooks/useAuth";
+import { useFilter, useAuth } from "../../../CustomHooks";
 import logo from "../../../Assets/Images/logo.png";
 import "./Navigation.css";
 
@@ -80,7 +79,7 @@ const Navigation = () => {
             )}
           </NavLink>
           <nav className="user--hover">
-            {isAuthenticated && (
+            {isAuthenticated ? (
               <div>
                 <Link to="/user">Welcome, {authState.user.firstName}</Link>
                 <hr />
@@ -92,8 +91,7 @@ const Navigation = () => {
                   Logout
                 </button>
               </div>
-            )}
-            {!isAuthenticated && (
+            ) : (
               <div>
                 <p>Welcome,</p>
                 <small>To access account</small>

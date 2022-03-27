@@ -1,9 +1,7 @@
 import { useState, useEffect } from "react";
 import { Eye } from "../../Assets/Icons/icons";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../CustomHooks/useAuth";
-import { useModal } from "../../CustomHooks/useModal";
-import { useAlert } from "../../CustomHooks/useAlert";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useAuth, useModal, useAlert } from "../../CustomHooks";
 import { Alert } from "../../Components/UI";
 import axios from "axios";
 
@@ -18,7 +16,10 @@ const Signupform = () => {
 
   const initialErrorState = {
     error: false,
-    errorMessage: "",
+    message: "",
+    emailError: false,
+    passwordError: false,
+    confirmPasswordError: false,
   };
 
   const { pathname } = useLocation();
@@ -56,13 +57,49 @@ const Signupform = () => {
       setError({
         error: true,
         message: "Password must be at least 6 characters long",
+        passwordError: true,
+      });
+      setSignupDetails({ ...signupDetails, password: "", confirmPassword: "" });
+      return;
+    }
+
+    if (password.search(/\d/) === -1) {
+      setError({
+        error: true,
+        message: "Password must contain at least one number",
+        passwordError: true,
+      });
+      setSignupDetails({ ...signupDetails, password: "", confirmPassword: "" });
+      return;
+    }
+
+    if (password.search(/[a-z]/) === -1) {
+      setError({
+        error: true,
+        message: "Password must contain at least one lowercase letter",
+        passwordError: true,
+      });
+      setSignupDetails({ ...signupDetails, password: "", confirmPassword: "" });
+      return;
+    }
+
+    if (password.search(/[A-Z]/) === -1) {
+      setError({
+        error: true,
+        passwordError: true,
+        message: "Password must contain at least one Uppercase letter",
       });
       setSignupDetails({ ...signupDetails, password: "", confirmPassword: "" });
       return;
     }
 
     if (password !== confirmPassword) {
-      setError({ error: true, message: "Passwords do not match" });
+      setError({
+        error: true,
+        message: "Passwords do not match",
+        confirmPasswordError: true,
+        passwordError: true,
+      });
       setSignupDetails({ ...signupDetails, password: "", confirmPassword: "" });
       return;
     }
@@ -77,7 +114,6 @@ const Signupform = () => {
       if (response.status === 201) {
         setSignupDetails(intialState);
         authDispatch({ type: "SIGNUP", payload: response.data });
-        // localStorage.setItem("user", JSON.stringify(response.data));
         setShowAlert(true);
       }
     } catch (err) {
@@ -153,11 +189,7 @@ const Signupform = () => {
             type={showPassword.password ? "text" : "password"}
             name="password"
             className={
-              "password-input" +
-              (error.message === "Passwords do not match" ||
-              error.message === "Password must be at least 6 characters long"
-                ? " input-error"
-                : "")
+              "password-input" + (error.passwordError ? " input-error" : "")
             }
             placeholder="*********"
             required
@@ -181,8 +213,7 @@ const Signupform = () => {
             type={showPassword.confirmPassword ? "text" : "password"}
             name="confirmPassword"
             className={
-              "password-input" +
-              (error.message === "Passwords do not match" ? " input-error" : "")
+              "password-input" + (error.passwordError ? " input-error" : "")
             }
             placeholder="*********"
             required
@@ -204,7 +235,9 @@ const Signupform = () => {
             Existing user? Login.
           </Link>
         </div>
-        <span className="red error-message">{error.message}</span>
+        {error.error && (
+          <span className="red error-message">{error.message}</span>
+        )}
       </form>
     </main>
   );

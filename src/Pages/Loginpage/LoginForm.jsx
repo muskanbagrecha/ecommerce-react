@@ -1,12 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Eye } from "../../Assets/Icons/icons";
-import { useAuth } from "../../CustomHooks/useAuth";
 import { useFetch } from "../../CustomHooks/useFetch";
-import { useModal } from "../../CustomHooks/useModal";
+import { useModal, useAuth, useAlert } from "../../CustomHooks/";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Alert } from "../../Components/UI";
-import { useAlert } from "../../CustomHooks/useAlert";
 import axios from "axios";
 
 const LoginForm = (props) => {
@@ -73,7 +71,7 @@ const LoginForm = (props) => {
     setLoginDetails({
       ...loginDetails,
       email: "adarshbalika@gmail.com",
-      password: "adarshbalika",
+      password: "adarshBalika123",
     });
   };
 
@@ -142,7 +140,7 @@ const LoginForm = (props) => {
             Test Credentials
           </button>
         </div>
-        <span className="red error-message">{error}</span>
+        {error && <span className="red error-message">{error}</span>}
       </form>
     </main>
   );
