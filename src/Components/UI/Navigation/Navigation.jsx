@@ -1,14 +1,38 @@
 import React from "react";
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import "./Navigation.css";
-import logo from "../../../Assets/Images/logo.png";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Cart, User, Wishlist, Search } from "../../../Assets/Icons/icons";
+import { useFilter, useAuth } from "../../../CustomHooks";
+import logo from "../../../Assets/Images/logo.png";
+import "./Navigation.css";
+
 const Navigation = () => {
+  const { filterDispatch } = useFilter();
+  const { authState, authDispatch } = useAuth();
+  const { isAuthenticated, user } = authState;
   //For responsiveness of navbar
   const [mobileNavActive, setMobileNavActive] = useState(false);
   const navActiveClass = mobileNavActive ? "navigation-full--active" : "";
   const burgerRotate = mobileNavActive ? "rotate" : "";
+
+  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    navigate("/products");
+    setSearch("");
+    filterDispatch({ type: "SEARCH", payload: search });
+  };
+
+  const logoutHandler = () => {
+    authDispatch({ type: "LOGOUT" });
+    localStorage.removeItem("user");
+    if (pathname === "/user") {
+      navigate("/");
+    }
+  };
 
   return (
     <nav className={`navigation navigation-full ${navActiveClass}`}>
@@ -24,15 +48,17 @@ const Navigation = () => {
           <NavLink to="/products">Shop</NavLink>
         </li>
         <li>
-        <NavLink to="/blog">Blog</NavLink>
+          <NavLink to="/blog">Blog</NavLink>
         </li>
       </ul>
 
-      <form className="nav-search">
+      <form className="nav-search" onSubmit={onSubmitHandler}>
         <input
           type="search"
           placeholder="Search for products"
           className="input-styled"
+          onChange={(e) => setSearch(e.target.value)}
+          value={search}
         />
         <button className="btn-icon">
           <Search />
@@ -41,19 +67,39 @@ const Navigation = () => {
 
       <ul className="icons">
         <li className="icon-badge-container user-icon">
-          <NavLink to="/login">
-            <i className="btn-icon">
-              <User />
-            </i>
+          <NavLink to={isAuthenticated ? "/user" : "/login"}>
+            {!isAuthenticated ? (
+              <i className="btn-icon">
+                <User />
+              </i>
+            ) : (
+              <span className="avatar avatar-xs avatar-text">
+                {authState.user.firstName[0] + authState.user.lastName[0]}
+              </span>
+            )}
           </NavLink>
           <nav className="user--hover">
-            <div>
-              <p>Welcome,</p>
-              <small>To access account</small>
-              <Link to="/login" className="btn-link-text">
-                Login/Signup
-              </Link>
-            </div>
+            {isAuthenticated ? (
+              <div>
+                <Link to="/user">Welcome, {authState.user.firstName}</Link>
+                <hr />
+                <Link to="/cart">Cart</Link>
+                <br />
+                <Link to="/wishlist">Wishlist</Link>
+                <hr />
+                <button className="btn-link-text" onClick={logoutHandler}>
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <div>
+                <p>Welcome,</p>
+                <small>To access account</small>
+                <Link to="/login" className="btn-link-text">
+                  Login/Signup
+                </Link>
+              </div>
+            )}
           </nav>
         </li>
 

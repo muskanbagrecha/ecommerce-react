@@ -1,0 +1,66 @@
+.carousel{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30rem;
+    width: auto;
+    cursor: pointer;
+}
+
+.carousel-img{
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s;
+}
+
+.arrow{
+    position: absolute; 
+    top: 50%;
+    background-color: var(--nav-color);
+    width: 1.75rem;
+    height: 2.5rem;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.carousel-item{
+    opacity: 0.3;
+    transition: 1s ease;
+}
+
+.carousel-item.active{
+    opacity: 1;
+}
+
+.arrow--left{
+    left: 0; 
+}
+
+.arrow--right{
+    right: 0;
+}
+
+@media screen and (max-width: 1580px){
+    .carousel{
+        height: 22rem;
+    }
+}
+
+@media screen and (max-width: 1020px){
+    .carousel{
+        height: 15rem;
+    }
+}
+
+@media screen and (max-width: 800px){
+    .carousel{
+        height: 15rem;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .carousel{
+        height: 10rem;
+    }
+}

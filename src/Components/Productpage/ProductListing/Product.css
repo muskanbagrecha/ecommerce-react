@@ -1,0 +1,60 @@
+.product-card .card__subtitle{
+    font-size: 1rem;
+}
+
+.product-card .card__title{
+    font-size: 1.25rem;
+}
+
+.product-card{
+    width: 18rem;
+    max-height: 30rem;
+}
+
+.card__CTA svg{
+    height: 1em;
+    width: 1em;
+    margin: auto 1rem;
+}
+
+.product-card .btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card__CTA span{
+    flex: 1 1 auto;
+}
+
+.card__rating{
+    position: absolute;
+    right: 0;
+    font-size: 1rem;
+    width: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px;
+}
+
+@media screen and (max-width:540px){
+
+    .product-card{
+        max-height: 25rem;
+    }
+
+    .product-card .card__img{
+        height: 50%;
+    }
+    .product-card .card__subtitle{
+        font-size: 0.85rem;
+    }
+    .product-card .card__title{
+        font-size: 1rem;
+    }
+
+    .card__CTA > *{
+        font-size: 1rem;
+    }
+}
