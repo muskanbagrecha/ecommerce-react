@@ -122,7 +122,7 @@ const LoginForm = (props) => {
           <input
             type={showPassword ? "text" : "password"}
             name="password"
-            className={error ? "input-error " : "" + "password-input"}
+            className={"password-input" + (error ? " input-error" : "")}
             value={loginDetails.password}
             placeholder="*********"
             required

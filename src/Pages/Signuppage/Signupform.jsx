@@ -83,11 +83,10 @@ const Signupform = () => {
     } catch (err) {
       console.log(err);
       if (err.response.status === 422) {
-        setError((prev) => ({
-          error: true,
-          message: "Account already exists",
-        }));
+        setError({ error: true, message: "Account already exists" });
         setSignupDetails(intialState);
+      } else {
+        setError({ error: true, message: "Unexpected error" });
       }
     }
   };

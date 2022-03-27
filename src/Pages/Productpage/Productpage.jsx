@@ -66,7 +66,7 @@ const Productpage = () => {
 
   const filterByRating = (data) => {
     if (filterState.rating) {
-      return data.filter((item) => item.rating.star >= filterState.rating);
+      return data.filter((item) => item.rating.value >= filterState.rating);
     }
     return data;
   };

@@ -1,10 +1,11 @@
 import { Card } from "../../UI";
 import { useCart } from "../../../CustomHooks/useCart";
 import { OutlinedHeart, Cart } from "../../../Assets/Icons/icons";
+import { FaStar } from "react-icons/fa";
 import "./Product.css";
 
 const Product = ({ product }) => {
-  const { title, subtitle, price, oldPrice, image, discount, inStock } =
+  const { title, subtitle, price, oldPrice, image, discount, inStock, rating } =
     product;
 
   const { addToCart } = useCart();
@@ -25,12 +26,18 @@ const Product = ({ product }) => {
             <h4 className="card__title">{title}</h4>
             <p className="card__subtitle">{subtitle}</p>
           </div>
-          <div className="card__amount">
-            <h4>₹{price}</h4>
-            <p className="strike-text small-text gray-text">
-              <del>₹{oldPrice}</del>
-            </p>
-            <p className="red-text discount">{discount}%</p>
+          <div className="flex-row-align-center">
+            <div className="card__amount">
+              <h4>₹{price}</h4>
+              <p className="strike-text small-text gray-text">
+                <del>₹{oldPrice}</del>
+              </p>
+              <p className="red-text discount">{discount}%</p>
+            </div>
+            <div className="card__rating">
+              <p>{rating.value}</p>
+              <FaStar />
+            </div>
           </div>
           <div className="card__CTA center-text">
             <button

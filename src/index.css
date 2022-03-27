@@ -78,6 +78,12 @@ button.btn-link-text {
     align-items: center;
 }
 
+.flex-row-align-center{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 @media screen and (max-width: 800px) {
     .styled-title {
         font-size: 2rem;
