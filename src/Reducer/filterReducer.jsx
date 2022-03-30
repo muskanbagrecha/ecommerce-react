@@ -30,7 +30,6 @@ const filterReducer = (state, action) => {
         const updatedItems = [...state.items].sort((item1, item2) =>
           parseFloat(item1.rating.value) > parseFloat(item2.rating.value) ? -1 : 1
         );
-        console.log(updatedItems);
         return {
           ...state,
           sortBy: "rating",

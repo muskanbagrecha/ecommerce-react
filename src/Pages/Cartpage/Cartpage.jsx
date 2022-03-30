@@ -1,5 +1,7 @@
 const Cartpage = () => {
-    return <div className="sub-container">Cartpage</div>;
+    return <div className="sub-container">
+      
+    </div>;
   };
   
   export default Cartpage;

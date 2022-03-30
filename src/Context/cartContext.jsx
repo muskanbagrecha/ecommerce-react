@@ -4,30 +4,35 @@ import { useAuth } from "../CustomHooks/useAuth";
 import { useModal } from "../CustomHooks/useModal";
 
 const initialState = {
-  items: [],
-  totalCartAmount: 0,
-  totalCartQuantity: 0,
+  items: []
 };
 
 export const CartContext = createContext(initialState);
 
 export const CartProvider = ({ children }) => {
-  const [cartState, cartDispatch] = useReducer(cartReducer, initialState);
+  const [cartState, setCartState] = useState(initialState);
   const [showCartAlert, setShowCartAlert] = useState(false);
   const { authState } = useAuth();
   const { setShowModal } = useModal();
 
-  const addToCart = (item) => {
-    console.log("adding");
+  const addToCart = (product) => {
     if (authState.isAuthenticated) {
-      //logic for add to cart - will add in next pr
+      
+      if(cartState.items.find(item => item._id === product._id))
+      {
+        setShowCartAlert(true);
+        setTimeout(() => {
+          setShowCartAlert(false);
+        }, 2000);
+      }
+
     } else {
       setShowModal(true);
     }
   };
 
   return (
-    <CartContext.Provider value={{ cartState, cartDispatch, addToCart }}>
+    <CartContext.Provider value={{ cartState, setCartState, addToCart }}>
       {children}
     </CartContext.Provider>
   );
