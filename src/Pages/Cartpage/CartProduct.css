@@ -1,0 +1,115 @@
+.cart__container {
+    width: 90%;
+    margin: 3rem auto;
+    max-width: 80rem;
+}
+
+.cart__container .card{
+    box-shadow: none;   
+}
+
+.card .btn{
+    padding: 5px;
+}
+
+.cart__items {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.cart__total {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    border-left: 1px solid #eee;
+    padding-left: 2rem;
+    width: 100%;
+}
+
+.price__list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem;
+}
+
+.price__list li {
+    display: flex;
+    justify-content: space-between;
+}
+
+.card__quantity {
+    width: 100%;
+    display: flex;
+    padding: 10px 0;
+}
+
+.card__quantity span {
+    border: 1px solid #ddd;
+    height: 2rem;
+    width: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-secondary);
+}
+
+.card__quantity span:nth-child(2) {
+    color: var(--color-complementary);
+}
+
+.card__CTA {
+    margin: 1rem 0;
+    width: 100%;
+}
+
+.card__CTA .btn {
+    width: 100%;
+}
+
+.coupons__container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 1rem;
+    border-top: 1px solid #eee;
+}
+
+.coupons__container .btn {
+    width: 100%;
+}
+
+.cart__empty-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    grid-area: product;
+}
+
+.cart__empty-container p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--color-secondary);
+    font-family: var(--ff-serif);
+}
+
+@media screen and (max-width: 980px) {
+    .cart__container {
+        width: 80%;
+        margin: 3rem auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-areas: "left-content"
+            "right-content";
+    }
+
+    .cart__right-container {
+        border-left: none;
+    }
+}
