@@ -15,10 +15,3 @@
 .CTA__container .btn{
     padding: 5px;
 }
-
-
-
-.cart__container .btn:hover{
-    box-shadow: none;
-    transform: none;
-}

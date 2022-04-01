@@ -68,10 +68,6 @@
     width: 100%;
 }
 
-.card__CTA .btn {
-    width: 100%;
-}
-
 .coupons__container {
     display: flex;
     justify-content: space-between;

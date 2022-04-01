@@ -2,13 +2,15 @@ import React from "react";
 import { useState } from "react";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Cart, User, Wishlist, Search } from "../../../Assets/Icons/icons";
-import { useFilter, useAuth } from "../../../CustomHooks";
+import { useFilter, useAuth, useCart, useWishlist } from "../../../CustomHooks";
 import logo from "../../../Assets/Images/logo.png";
 import "./Navigation.css";
 
 const Navigation = () => {
-  const { filterDispatch } = useFilter();
+  const { filterState, filterDispatch } = useFilter();
   const { authState, authDispatch } = useAuth();
+  const { cartState } = useCart();
+  const { wishlistState } = useWishlist();
   const { isAuthenticated, user } = authState;
   //For responsiveness of navbar
   const [mobileNavActive, setMobileNavActive] = useState(false);
@@ -18,11 +20,14 @@ const Navigation = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
+  const totalCartItems = cartState.items.reduce((acc, curr) => {
+    return acc + curr.qty;
+  }, 0);
+  const totalWishlistItems = wishlistState.items.length;
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    navigate("/products");
     setSearch("");
+    navigate("/products");
     filterDispatch({ type: "SEARCH", payload: search });
   };
 
@@ -57,8 +62,13 @@ const Navigation = () => {
           type="search"
           placeholder="Search for products"
           className="input-styled"
-          onChange={(e) => setSearch(e.target.value)}
-          value={search}
+          onChange={(e) => {
+            setSearch(e.target.value);
+            if (e.target.value === "") {
+              filterDispatch({ type: "SEARCH", payload: "" });
+            }
+          }}
+          value={search || filterState.search}
         />
         <button className="btn-icon">
           <Search />
@@ -74,14 +84,14 @@ const Navigation = () => {
               </i>
             ) : (
               <span className="avatar avatar-xs avatar-text">
-                {authState.user.firstName[0] + authState.user.lastName[0]}
+                {user.firstName[0] + user.lastName[0]}
               </span>
             )}
           </NavLink>
           <nav className="user--hover">
             {isAuthenticated ? (
               <div>
-                <Link to="/user">Welcome, {authState.user.firstName}</Link>
+                <Link to="/user">Welcome, {user.firstName}</Link>
                 <hr />
                 <Link to="/cart">Cart</Link>
                 <br />
@@ -108,6 +118,11 @@ const Navigation = () => {
             <i className="btn-icon">
               <Cart />
             </i>
+            {totalCartItems > 0 && (
+              <span className="badge badge-icon badge-notification">
+                {totalCartItems}
+              </span>
+            )}
           </NavLink>
         </li>
         <li className="icon-badge-container">
@@ -115,6 +130,11 @@ const Navigation = () => {
             <i className="btn-icon">
               <Wishlist />
             </i>
+            {totalWishlistItems > 0 && (
+              <span className="badge badge-icon badge-notification">
+                {totalWishlistItems}
+              </span>
+            )}
           </NavLink>
         </li>
       </ul>

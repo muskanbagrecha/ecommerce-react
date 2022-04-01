@@ -1,38 +1,105 @@
-import { createContext, useReducer, useState } from "react";
-import { cartReducer } from "../Reducer/cartReducer";
-import { useAuth } from "../CustomHooks/useAuth";
-import { useModal } from "../CustomHooks/useModal";
-
+import { createContext, useState } from "react";
+import axios from "axios";
 const initialState = {
-  items: []
+  items: [],
 };
 
 export const CartContext = createContext(initialState);
 
 export const CartProvider = ({ children }) => {
   const [cartState, setCartState] = useState(initialState);
-  const [showCartAlert, setShowCartAlert] = useState(false);
-  const { authState } = useAuth();
-  const { setShowModal } = useModal();
+  const [loader, setLoader] = useState(null);
+  const [error, setError] = useState(null);
 
-  const addToCart = (product) => {
-    if (authState.isAuthenticated) {
-      
-      if(cartState.items.find(item => item._id === product._id))
-      {
-        setShowCartAlert(true);
-        setTimeout(() => {
-          setShowCartAlert(false);
-        }, 2000);
+  const addToCart = async ({ product, token }) => {
+    try {
+      setLoader(true);
+      const response = await axios.post(
+        "api/user/cart",
+        {
+          product,
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      if (response.status === 200 || response.status === 201) {
+        setCartState({
+          ...cartState,
+          items: response.data.cart,
+        });
       }
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoader(false);
+    }
+  };
 
-    } else {
-      setShowModal(true);
+  const updateCart = async ({ product, type, token }) => {
+    try {
+      setLoader(true);
+      const response = await axios.post(
+        `api/user/cart/${product._id}`,
+        {
+          action: {
+            type: type,
+          },
+        },
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      if (response.status === 200 || response.status === 201) {
+        setCartState({
+          ...cartState,
+          items: response.data.cart,
+        });
+      }
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoader(false);
+    }
+  };
+
+  const removeFromCart = async ({ product, token }) => {
+    console.log(product._id, token);
+    try {
+      setLoader(true);
+      const response = await axios.delete(`api/user/cart/${product._id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
+      if (response.status === 200 || response.status === 201) {
+        setCartState({
+          ...cartState,
+          items: response.data.cart,
+        });
+      }
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoader(false);
     }
   };
 
   return (
-    <CartContext.Provider value={{ cartState, setCartState, addToCart }}>
+    <CartContext.Provider
+      value={{
+        cartState,
+        addToCart,
+        updateCart,
+        removeFromCart,
+        loader,
+        error,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

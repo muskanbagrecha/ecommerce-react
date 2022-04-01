@@ -8,7 +8,7 @@ const initialData = {
   rating: null,
   range: 0,
   excludeOutOfStock: false,
-  search: null,
+  search: "",
   items: [],
   initialState: [],
 };

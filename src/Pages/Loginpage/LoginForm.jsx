@@ -51,7 +51,11 @@ const LoginForm = (props) => {
         if (pathname === "/products") {
           setShowModal(false);
         }
-        setShowAlert(true);
+        setShowAlert({
+          showAlert: true,
+          alertMessage: "Logged in successfully!",
+          type: "success",
+        });
         const token = response.data.encodedToken;
         //update wishlist and cart of user on login
       }
@@ -80,18 +84,22 @@ const LoginForm = (props) => {
       if (authState.isAuthenticated) {
         if (pathname === "/login") {
           navigate("/products");
-          setShowAlert(false);
+          setShowAlert({
+            setShowAlert: false,
+            alertMessage: null,
+            type: null,
+          });
         }
         setShowModal(false);
       }
     }, 2000);
-  }, [showAlert]);
+  }, [showAlert.showAlert]);
 
   const loginClasses = "login__container " + props.classes;
 
   return (
     <main className={loginClasses}>
-      {showAlert && <Alert text="Logged in successfully!" type="success" />}
+      {showAlert.showAlert && <Alert/>}
       <form
         className="input-form"
         autoComplete="on"

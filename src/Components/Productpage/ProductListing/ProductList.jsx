@@ -5,31 +5,31 @@ import { Alert } from "../../UI";
 
 const ProductList = ({ products }) => {
   const [paginatedData, setPaginatedData] = useState(products);
-  const [current, setCurrent] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const { showAlert, setShowAlert } = useAlert();
 
   const nextPage = () => {
-    if (current < products.length / 8) {
+    if (currentPage < products.length / 6) {
       setPaginatedData(products);
-      setCurrent((prev) => prev + 1);
+      setCurrentPage((prev) => prev + 1);
     }
   };
   const prevPage = () => {
-    if (current !== 1) {
+    if (currentPage !== 1) {
       setPaginatedData(products);
-      setCurrent((prev) => prev - 1);
+      setCurrentPage((prev) => prev - 1);
     }
   };
 
   const paginate = () => {
-    const startIndex = (current - 1) * 8;
-    const endIndex = startIndex + 8;
+    const startIndex = (currentPage - 1) * 6;
+    const endIndex = startIndex + 6;
     setPaginatedData((prev) => prev.slice(startIndex, endIndex));
   };
 
   useEffect(() => {
     paginate();
-  }, [current]);
+  }, [currentPage]);
 
   useEffect(() => {
     setPaginatedData(products);
@@ -38,22 +38,25 @@ const ProductList = ({ products }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      setShowAlert(false);
+      setShowAlert({
+        showAlert: false,
+        alertMessage: null,
+        type: null,
+      });
     }, 2000);
-  }, [showAlert]);
-
+  }, [showAlert.showAlert]);
 
   return (
     <div className="products__list-container">
-      {showAlert && <Alert text="Logged in successfully!" type="success" />}
-      {paginatedData?.map((product) => (
-        <Product key={product._id} product={product} />
-      ))}
+      {showAlert.showAlert && <Alert />}
+      {paginatedData?.map((product) => {
+        return <Product key={product._id} product={product} />;
+      })}
 
-      {/* <Pagination /> */}
+      {/* Pagination  */}
       <section className="pagination">
         <a onClick={prevPage}>&laquo;</a>
-        <a className="active">{current}</a>
+        <a className="active">{currentPage}</a>
         <a onClick={nextPage}>&raquo;</a>
       </section>
     </div>

@@ -1,47 +1,36 @@
 import { Filter } from "../../Components/Productpage/";
 import { useFilter } from "../../CustomHooks/useFilter";
 import { useState, useEffect } from "react";
-import { useFetch } from "../../CustomHooks/useFetch";
 import axios from "axios";
 import ProductList from "../../Components/Productpage/ProductListing/ProductList";
 import { LoginModal } from "../Loginpage/LoginModal";
 import { useModal } from "../../CustomHooks/useModal";
-import { Alert } from "../../Components/UI";
-import { useAlert } from "../../CustomHooks/useAlert";
 import spinner from "../../Assets/loader";
 import "./Productpage.css";
 
 const Productpage = () => {
-  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { filterState, filterDispatch } = useFilter();
-  const { showModal, setShowModal } = useModal();
-  // fetch products PS: This code will be uncommented in future
-  // const { data, error, loading } = useFetch({
-  //   url: "/api/products",
-  //   method: "GET",
-  // });
-
-  // filterDispatch({ type: "SET_PRODUCTS", payload: data?.products });
+  const { showModal } = useModal();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios({
           url: "/api/products",
           method: "GET",
         });
         if (response.status === 200 || response.status === 201) {
-          setProducts(response.data.products);
           filterDispatch({
             type: "SET_ITEMS",
             payload: response.data.products,
           });
-          setLoading(false);
         }
       } catch (err) {
         setError(err);
+      } finally {
         setLoading(false);
       }
     };
@@ -93,14 +82,11 @@ const Productpage = () => {
     return data;
   };
 
-  useEffect(() => {
-    const dataByCategories = filterByCategories();
-    const dataByPriceRange = filterByPriceRange(dataByCategories);
-    const dataByRating = filterByRating(dataByPriceRange);
-    const dataByStock = filterByStock(dataByRating);
-    const dataBySearch = filterBySearch(dataByStock);
-    setProducts(dataBySearch);
-  }, [filterState]);
+  const dataByCategories = filterByCategories();
+  const dataByPriceRange = filterByPriceRange(dataByCategories);
+  const dataByRating = filterByRating(dataByPriceRange);
+  const dataByStock = filterByStock(dataByRating);
+  const products = filterBySearch(dataByStock);
 
   return (
     <div className="sub-container product__main-container">

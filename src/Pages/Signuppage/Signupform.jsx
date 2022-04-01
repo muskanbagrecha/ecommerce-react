@@ -114,7 +114,11 @@ const Signupform = () => {
       if (response.status === 201) {
         setSignupDetails(intialState);
         authDispatch({ type: "SIGNUP", payload: response.data });
-        setShowAlert(true);
+        setShowAlert({
+          showAlert: true,
+          alertMessage: "Account created successfully!",
+          type: "success",
+        });
       }
     } catch (err) {
       console.log(err);
@@ -129,7 +133,11 @@ const Signupform = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setShowAlert(false);
+      setShowAlert({
+        showAlert: false,
+        message: null,
+        type: null,
+      });
       if (authState.isAuthenticated) {
         if (pathname === "/signup") {
           navigate("/products");
@@ -137,13 +145,12 @@ const Signupform = () => {
         setShowModal(false);
       }
     }, 2000);
-  }, [showAlert]);
+  }, [showAlert.showAlert]);
 
+  
   return (
     <main className="signup__container">
-      {showAlert && (
-        <Alert text="Account created successfully!" type="success" />
-      )}
+      {showAlert.showAlert && <Alert />}
       <form className="input-form" autoComplete="on" onSubmit={submitHandler}>
         <h3>Signup</h3>
         <label className="label" htmlFor="first-name">
