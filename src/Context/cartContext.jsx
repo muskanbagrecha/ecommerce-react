@@ -68,7 +68,6 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = async ({ product, token }) => {
-    console.log(product._id, token);
     try {
       setLoader(true);
       const response = await axios.delete(`api/user/cart/${product._id}`, {

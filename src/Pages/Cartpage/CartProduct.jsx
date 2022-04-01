@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useCart, useAuth, useAlert } from "../../CustomHooks";
+import { useCart, useAuth, useAlert, useWishlist } from "../../CustomHooks";
 import { Card } from "../../Components/UI";
 import { FaStar } from "react-icons/fa";
 import "./CartProduct.css";
@@ -7,8 +7,12 @@ export const CartProduct = ({ product }) => {
   const { title, subtitle, price, oldPrice, image, discount, rating } = product;
   const [isDisabled, setIsDisabled] = useState(false);
   const { cartState, updateCart, removeFromCart, error } = useCart();
-  const { setShowAlert } = useAlert();
+  const { showAlert, setShowAlert } = useAlert();
   const { authState } = useAuth();
+  const { wishlistState, addToWishlist } = useWishlist();
+  const existsInWishlist = wishlistState.items.some(
+    (item) => item._id === product._id
+  );
 
   useEffect(() => {
     setTimeout(() => {
@@ -16,16 +20,15 @@ export const CartProduct = ({ product }) => {
     }, 1000);
   }, [isDisabled]);
 
-  // useEffect(() => {
-  //   const id = setTimeout(() => {
-  //     setShowAlert({
-  //       showAlert: false,
-  //       alertMessage: null,
-  //       type: null,
-  //     });
-  //   }, 2000);
-  //   return () => clearTimeout(id);
-  // }, [cartState.items]);
+  useEffect(() => {
+    setTimeout(() => {
+      setShowAlert({
+        showAlert: false,
+        alertMessage: null,
+        type: null,
+      });
+    }, 2000);
+  }, [showAlert.showAlert]);
 
   const qtyIncrementHandler = () => {
     updateCart({
@@ -71,24 +74,52 @@ export const CartProduct = ({ product }) => {
     }
   };
 
-  const deleteItemHandler = () => {
-    removeFromCart({ product, token: authState.token })
-    if(error)
-    {
+  const deleteCartItemHandler = () => {
+    removeFromCart({ product, token: authState.token });
+    if (error) {
       setShowAlert({
         showAlert: true,
         alertMessage: error,
         type: "danger",
       });
-    }
-    else{
+    } else {
       setShowAlert({
         showAlert: true,
         alertMessage: "Item Deleted Successfully!",
         type: "success",
       });
     }
-  }
+  };
+
+  const moveToWishlistHandler = () => {
+    if (!existsInWishlist) {
+      addToWishlist({
+        product,
+        token: authState.token,
+      });
+      deleteCartItemHandler();
+      if (error) {
+        setShowAlert({
+          showAlert: true,
+          alertMessage: error,
+          type: "danger",
+        });
+      } else {
+        setShowAlert({
+          showAlert: true,
+          alertMessage: "Product added to wishlist successfully!",
+          type: "success",
+        });
+        setIsDisabled(true);
+      }
+    } else {
+      setShowAlert({
+        showAlert: true,
+        alertMessage: "Product already exists in wishlist!",
+        type: "danger",
+      });
+    }
+  };
 
   return (
     <Card className="card-horizontal cart-card">
@@ -128,10 +159,15 @@ export const CartProduct = ({ product }) => {
           </span>
         </div>
         <div className="card__CTA">
-          <button className="btn btn-primary full-width">Wishlist</button>
+          <button
+            className="btn btn-primary full-width"
+            onClick={moveToWishlistHandler}
+          >
+            Wishlist
+          </button>
           <button
             className="btn btn-outline full-width"
-            onClick={() => deleteItemHandler()}
+            onClick={() => deleteCartItemHandler()}
           >
             Remove Item
           </button>

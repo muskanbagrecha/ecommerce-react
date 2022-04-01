@@ -39,7 +39,7 @@ const Product = ({ product }) => {
   );
   const navigate = useNavigate();
 
-  const cartHandler = () => {
+  const addToCartHandler = () => {
     if (authState.isAuthenticated) {
       addToCart({ product, token: authState.token });
       if (error) {
@@ -127,7 +127,7 @@ const Product = ({ product }) => {
       ) : (
         <div className="component-close" onClick={addToWishlistHandler}>
           <span>
-            <OutlinedHeart bgColor="red" />
+            <OutlinedHeart bgcolor="red" />
           </span>
         </div>
       )}
@@ -161,7 +161,9 @@ const Product = ({ product }) => {
                   navigate("/cart");
                 }}
               >
+                <span>
                 Go to Cart
+                </span>
                 <Cart />
               </button>
             ) : (
@@ -169,7 +171,7 @@ const Product = ({ product }) => {
                 className={`btn btn-primary full-width ${
                   isDisabled ? "disabled" : ""
                 }`}
-                onClick={cartHandler}
+                onClick={addToCartHandler}
               >
                 <span>Add to Cart</span>
                 <Cart />

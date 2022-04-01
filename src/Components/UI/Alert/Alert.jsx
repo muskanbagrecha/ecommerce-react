@@ -5,11 +5,11 @@ const Alert = () => {
   const { showAlert } = useAlert();
   const text = showAlert.alertMessage;
   const type = showAlert.type;
-  const alertClass = type === "error" ? "alert-error" : "alert-success";
+  const alertClass = type === "danger" ? "alert-danger" : "alert-success";
 
   return (
     <div className={`alert ${alertClass}`}>
-      <span>{type === "error" ? <FaExclamation /> : <FaCheck />}</span>
+      <span>{type === "danger" ? <FaExclamation /> : <FaCheck />}</span>
       <span>{text}</span>
     </div>
   );

@@ -1,9 +1,12 @@
-import { useWishlist } from "../../CustomHooks/useWishlist";
+import { useEffect } from "react";
+import { useWishlist, useAlert } from "../../CustomHooks/";
 import { WishlistProduct } from "./WishlistProduct";
+import { Alert } from "../../Components/UI";
 import { Link } from "react-router-dom";
 import "./Wishlistpage.css";
 const Wishlistpage = () => {
-  const { wishlistState } = useWishlist();
+  const { wishlistState, removeFromWishlist } = useWishlist();
+  const { showAlert, setShowAlert } = useAlert();
   const { items } = wishlistState;
   const totalWishlistItems = wishlistState.items.length;
 
@@ -11,8 +14,20 @@ const Wishlistpage = () => {
     <WishlistProduct key={item.id} product={item} />
   ));
 
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setShowAlert({
+        showAlert: false,
+        alertMessage: null,
+        type: null,
+      });
+    }, 2000);
+    return () => clearTimeout(id);
+  }, [wishlistState.items]);
+
   return (
     <div className="sub-container">
+      <div className="flex-center">{showAlert.showAlert && <Alert />}</div>
       <h1 className="styled-title">My Wishlist</h1>
       {totalWishlistItems > 0 ? (
         <div className="wishlist__container">{wishlistItems}</div>
