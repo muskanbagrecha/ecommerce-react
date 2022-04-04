@@ -5,8 +5,25 @@
     font-family: 'Roboto', sans-serif;
 }
 
+body,
 html {
     scroll-behavior: smooth;
+}
+
+body::-webkit-scrollbar,
+.code__wrapper::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+body::-webkit-scrollbar-track,
+.code__wrapper::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);     
+}
+
+body::-webkit-scrollbar-thumb,
+.code__wrapper::-webkit-scrollbar-thumb {
+    background-color: rgba(var(--color-primary-values), 0.5);    
 }
 
 .main-container{

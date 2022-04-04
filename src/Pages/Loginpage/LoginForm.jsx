@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Eye } from "../../Assets/Icons/icons";
 import { useFetch } from "../../CustomHooks/useFetch";
 import { useModal, useAuth, useAlert } from "../../CustomHooks/";
-import { useNavigate, useLocation } from "react-router-dom";
 import { Alert } from "../../Components/UI";
 import axios from "axios";
 
@@ -99,7 +98,7 @@ const LoginForm = (props) => {
 
   return (
     <main className={loginClasses}>
-      {showAlert.showAlert && <Alert/>}
+      {showAlert.showAlert && <Alert />}
       <form
         className="input-form"
         autoComplete="on"

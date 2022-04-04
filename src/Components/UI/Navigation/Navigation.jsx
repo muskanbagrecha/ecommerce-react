@@ -52,9 +52,6 @@ const Navigation = () => {
         <li>
           <NavLink to="/products">Shop</NavLink>
         </li>
-        <li>
-          <NavLink to="/blog">Blog</NavLink>
-        </li>
       </ul>
 
       <form className="nav-search" onSubmit={onSubmitHandler}>
