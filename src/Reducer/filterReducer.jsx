@@ -9,8 +9,8 @@ const filterReducer = (state, action) => {
 
     case "SORT_BY":
       if (action.payload === "low-to-high") {
-        const updatedItems = [...state.items].sort((item1, item2) =>
-          parseInt(item1.price, 10) < parseInt(item2.price, 10) ? -1 : 1
+        const updatedItems = [...state.items].sort(
+          (item1, item2) => item1.price - item2.price
         );
         return {
           ...state,
@@ -18,8 +18,8 @@ const filterReducer = (state, action) => {
           items: updatedItems,
         };
       } else if (action.payload === "high-to-low") {
-        const updatedItems = [...state.items].sort((item1, item2) =>
-          parseInt(item1.price, 10) > parseInt(item2.price, 10) ? -1 : 1
+        const updatedItems = [...state.items].sort(
+          (item1, item2) => item2.price - item1.price
         );
         return {
           ...state,
@@ -27,10 +27,9 @@ const filterReducer = (state, action) => {
           items: updatedItems,
         };
       } else if (action.payload === "rating") {
-        const updatedItems = [...state.items].sort((item1, item2) =>
-          parseFloat(item1.rating.value) > parseFloat(item2.rating.value) ? -1 : 1
+        const updatedItems = [...state.items].sort(
+          (item1, item2) => item2.rating.value - item1.rating.value
         );
-        console.log(updatedItems);
         return {
           ...state,
           sortBy: "rating",
@@ -41,19 +40,19 @@ const filterReducer = (state, action) => {
       }
 
     case "ADD_CATEGORY":
-      const newCategory = action.payload;
-      const updatedCategories = [...state.categories, newCategory];
+      const newCategories = [...state.categories, action.payload];
       return {
         ...state,
-        categories: updatedCategories,
+        categories: newCategories,
       };
 
     case "REMOVE_CATEGORY":
+      const updatedCategories = state.categories.filter(
+        (category) => category !== action.payload
+      );
       return {
         ...state,
-        categories: state.categories.filter(
-          (category) => category !== action.payload
-        ),
+        categories: updatedCategories,
       };
 
     case "PRICE_RANGE":
@@ -89,7 +88,7 @@ const filterReducer = (state, action) => {
         search: "",
         items: state.initialState,
       };
-      
+
     default:
       return state;
   }

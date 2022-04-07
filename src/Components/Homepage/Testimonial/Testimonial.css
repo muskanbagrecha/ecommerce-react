@@ -16,3 +16,9 @@
 .testimonial__content > h4{
     text-align: center;
 }
+
+@media screen and (max-width: 800px) {
+    .testimonial__content h4{
+        font-size: var(--fsize-300);
+    }    
+}

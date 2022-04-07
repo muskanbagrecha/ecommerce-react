@@ -1,18 +1,15 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Eye } from "../../Assets/Icons/icons";
-import { useFetch } from "../../CustomHooks/useFetch";
 import { useModal, useAuth, useAlert } from "../../CustomHooks/";
-import { useNavigate, useLocation } from "react-router-dom";
-import { Alert } from "../../Components/UI";
 import axios from "axios";
 
 const LoginForm = (props) => {
   let navigate = useNavigate();
-  const { authState, authDispatch } = useAuth();
+  const { authDispatch } = useAuth();
   const { setShowModal } = useModal();
   const { pathname } = useLocation();
-  const { showAlert, setShowAlert } = useAlert();
+  const { setShowAlert } = useAlert();
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loginDetails, setLoginDetails] = useState({
@@ -51,9 +48,12 @@ const LoginForm = (props) => {
         if (pathname === "/products") {
           setShowModal(false);
         }
-        setShowAlert(true);
-        const token = response.data.encodedToken;
-        //update wishlist and cart of user on login
+        setShowAlert({
+          showAlert: true,
+          alertMessage: "Logged in successfully!",
+          type: "success",
+        });
+        navigate("/products");
       }
     } catch (err) {
       console.log(err);
@@ -75,23 +75,10 @@ const LoginForm = (props) => {
     });
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      if (authState.isAuthenticated) {
-        if (pathname === "/login") {
-          navigate("/products");
-          setShowAlert(false);
-        }
-        setShowModal(false);
-      }
-    }, 2000);
-  }, [showAlert]);
-
   const loginClasses = "login__container " + props.classes;
 
   return (
     <main className={loginClasses}>
-      {showAlert && <Alert text="Logged in successfully!" type="success" />}
       <form
         className="input-form"
         autoComplete="on"

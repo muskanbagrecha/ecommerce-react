@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext } from "react";
 import { useReducer } from "react";
 import { filterReducer } from "../Reducer";
 
@@ -8,7 +8,7 @@ const initialData = {
   rating: null,
   range: 0,
   excludeOutOfStock: false,
-  search: null,
+  search: "",
   items: [],
   initialState: [],
 };

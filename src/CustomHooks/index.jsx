@@ -4,5 +4,6 @@ import { useModal } from "./useModal";
 import { useCart } from "./useCart";
 import { useFetch } from "./useFetch";
 import { useFilter } from "./useFilter";
+import { useWishlist } from "./useWishlist";
 
-export { useAlert, useAuth, useModal, useCart, useFetch, useFilter };
+export { useAlert, useAuth, useModal, useCart, useFetch, useFilter, useWishlist };

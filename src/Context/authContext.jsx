@@ -1,7 +1,5 @@
-import { createContext } from "react";
-import { useFetch } from "../CustomHooks/useFetch";
+import { createContext, useReducer } from "react";
 import { authReducer } from "../Reducer";
-import { useReducer, useState } from "react";
 
 const AuthContext = createContext({
   isAuthenticated: false,

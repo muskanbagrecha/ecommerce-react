@@ -1,47 +1,48 @@
 import { Filter } from "../../Components/Productpage/";
-import { useFilter } from "../../CustomHooks/useFilter";
+import { useFilter, useCart, useAuth, useWishlist } from "../../CustomHooks/";
 import { useState, useEffect } from "react";
-import { useFetch } from "../../CustomHooks/useFetch";
 import axios from "axios";
 import ProductList from "../../Components/Productpage/ProductListing/ProductList";
 import { LoginModal } from "../Loginpage/LoginModal";
 import { useModal } from "../../CustomHooks/useModal";
-import { Alert } from "../../Components/UI";
-import { useAlert } from "../../CustomHooks/useAlert";
 import spinner from "../../Assets/loader";
 import "./Productpage.css";
 
 const Productpage = () => {
-  const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { getCartItems } = useCart();
+  const { getWishlistItems } = useWishlist();
   const { filterState, filterDispatch } = useFilter();
-  const { showModal, setShowModal } = useModal();
-  // fetch products PS: This code will be uncommented in future
-  // const { data, error, loading } = useFetch({
-  //   url: "/api/products",
-  //   method: "GET",
-  // });
+  const { showModal } = useModal();
 
-  // filterDispatch({ type: "SET_PRODUCTS", payload: data?.products });
+  const {
+    authState: { token, isAuthenticated },
+  } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getCartItems({ token });
+      getWishlistItems({ token });
+    }
+  }, [token]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
         const response = await axios({
           url: "/api/products",
           method: "GET",
         });
         if (response.status === 200 || response.status === 201) {
-          setProducts(response.data.products);
           filterDispatch({
             type: "SET_ITEMS",
             payload: response.data.products,
           });
-          setLoading(false);
         }
       } catch (err) {
-        setError(err);
+        console.log(err);
+      } finally {
         setLoading(false);
       }
     };
@@ -93,14 +94,11 @@ const Productpage = () => {
     return data;
   };
 
-  useEffect(() => {
-    const dataByCategories = filterByCategories();
-    const dataByPriceRange = filterByPriceRange(dataByCategories);
-    const dataByRating = filterByRating(dataByPriceRange);
-    const dataByStock = filterByStock(dataByRating);
-    const dataBySearch = filterBySearch(dataByStock);
-    setProducts(dataBySearch);
-  }, [filterState]);
+  const dataByCategories = filterByCategories();
+  const dataByPriceRange = filterByPriceRange(dataByCategories);
+  const dataByRating = filterByRating(dataByPriceRange);
+  const dataByStock = filterByStock(dataByRating);
+  const products = filterBySearch(dataByStock);
 
   return (
     <div className="sub-container product__main-container">
@@ -110,7 +108,6 @@ const Productpage = () => {
       ) : (
         <ProductList products={products} />
       )}
-      {error ? <p className="red">{error}</p> : null}
       {filterState.search && (
         <p className="search-result">
           Showing results for - {filterState.search}

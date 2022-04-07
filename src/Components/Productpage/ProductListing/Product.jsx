@@ -1,22 +1,138 @@
 import { Card } from "../../UI";
-import { useCart } from "../../../CustomHooks/useCart";
-import { OutlinedHeart, Cart } from "../../../Assets/Icons/icons";
+import {
+  useAuth,
+  useModal,
+  useAlert,
+  useCart,
+  useWishlist,
+} from "../../../CustomHooks/";
+import { OutlinedHeart, SolidHeart, Cart } from "../../../Assets/Icons/icons";
 import { FaStar } from "react-icons/fa";
 import "./Product.css";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Product = ({ product }) => {
-  const { title, subtitle, price, oldPrice, image, discount, inStock, rating } =
-    product;
+  const {
+    _id,
+    title,
+    subtitle,
+    price,
+    oldPrice,
+    image,
+    discount,
+    inStock,
+    rating,
+  } = product;
+  const { authState } = useAuth();
+  const { setShowModal } = useModal();
+  const { cartState } = useCart();
+  const { items: cartItems } = cartState;
+  const { setShowAlert } = useAlert();
+  const { addToCart, error } = useCart();
+  const { wishlistState, addToWishlist, removeFromWishlist } = useWishlist();
+  const { items: wishlistItems } = wishlistState;
+  const [isDisabled, setIsDisabled] = useState(false);
+  const productExistsInCart = cartItems.find((item) => item._id === _id);
+  const productExistsInWishlist = wishlistItems.find(
+    (item) => item._id === _id
+  );
+  const navigate = useNavigate();
 
-  const { addToCart } = useCart();
+  const addToCartHandler = () => {
+    if (authState.isAuthenticated) {
+      addToCart({ product, token: authState.token });
+      console.log(authState.token);
+      if (error) {
+        console.log(error)
+        setShowAlert({
+          showAlert: true,
+          alertMessage: error,
+          type: "danger",
+        });
+      } else {
+        setShowAlert({
+          showAlert: true,
+          alertMessage: "Product added to cart successfully!",
+          type: "success",
+        });
+        setIsDisabled(true);
+      }
+    } else {
+      setShowModal(true);
+    }
+  };
+
+  const addToWishlistHandler = () => {
+    if (authState.isAuthenticated) {
+      addToWishlist({ product, token: authState.token });
+      if (error) {
+        setShowAlert({
+          showAlert: true,
+          alertMessage: error,
+          type: "danger",
+        });
+      } else {
+        setShowAlert({
+          showAlert: true,
+          alertMessage: "Product added to wishlist successfully!",
+          type: "success",
+        });
+        setIsDisabled(true);
+      }
+    } else {
+      setShowModal(true);
+    }
+  };
+
+  const removeFromWishlistHandler = () => {
+    if (authState.isAuthenticated) {
+      removeFromWishlist({ product, token: authState.token });
+      if (error) {
+        setShowAlert({
+          showAlert: true,
+          alertMessage: error,
+          type: "danger",
+        });
+      } else {
+        setShowAlert({
+          showAlert: true,
+          alertMessage: "Product removed from wishlist successfully!",
+          type: "success",
+        });
+        setIsDisabled(true);
+      }
+    } else {
+      setShowModal(true);
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowAlert({
+        showAlert: false,
+        alertMessage: null,
+        type: null,
+      });
+      setIsDisabled(false);
+    }, 2000);
+  }, [cartItems]);
 
   return (
     <Card className="card-vertical product-card">
-      <div className="component-close">
-        <span>
-          <OutlinedHeart />
-        </span>
-      </div>
+      {productExistsInWishlist ? (
+        <div className="component-close" onClick={removeFromWishlistHandler}>
+          <span>
+            <SolidHeart bgcolor="red" />
+          </span>
+        </div>
+      ) : (
+        <div className="component-close" onClick={addToWishlistHandler}>
+          <span>
+            <OutlinedHeart bgcolor="red" />
+          </span>
+        </div>
+      )}
       <div className={!inStock ? "overlay-container" : ""}>
         <div className="card__img">
           <img src={image} alt={title} className="img-responsive" />
@@ -40,13 +156,27 @@ const Product = ({ product }) => {
             </div>
           </div>
           <div className="card__CTA center-text">
-            <button
-              className="btn btn-primary full-width"
-              onClick={() => addToCart(product)}
-            >
-              <span>Add to Cart</span>
-              <Cart />
-            </button>
+            {productExistsInCart ? (
+              <button
+                className="btn btn-primary full-width"
+                onClick={() => {
+                  navigate("/cart");
+                }}
+              >
+                <span>Go to Cart</span>
+                <Cart />
+              </button>
+            ) : (
+              <button
+                className={`btn btn-primary full-width ${
+                  isDisabled ? "disabled" : ""
+                }`}
+                onClick={addToCartHandler}
+              >
+                <span>Add to Cart</span>
+                <Cart />
+              </button>
+            )}
           </div>
         </div>
       </div>

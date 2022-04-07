@@ -9,6 +9,8 @@ import { ModalProvider } from "./Context/modalContext";
 import { AuthProvider } from "./Context/authContext";
 import { CartProvider } from "./Context/cartContext";
 import { AlertProvider } from "./Context/alertContext";
+import { WishlistProvider } from "./Context/wishlistContext";
+import { AppProvider } from "./Provider/AppProvider";
 
 // Call make Server
 makeServer();
@@ -16,17 +18,9 @@ makeServer();
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <FilterProvider>
-        <ModalProvider>
-          <AuthProvider>
-            <CartProvider>
-              <AlertProvider>
-                <App />
-              </AlertProvider>
-            </CartProvider>
-          </AuthProvider>
-        </ModalProvider>
-      </FilterProvider>
+      <AppProvider>
+        <App />
+      </AppProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")

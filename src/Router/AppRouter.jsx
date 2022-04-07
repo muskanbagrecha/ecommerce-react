@@ -9,7 +9,6 @@ import Signuppage from "../Pages/Signuppage/Signuppage";
 import Userpage from "../Pages/Userpage/Userpage";
 import MockAPI from "../Pages/Mockapi/MockAPI";
 import NotFound from "../Pages/NotFound/NotFound";
-import Blogpage from "../Pages/Blogpage/Blog";
 
 const AppRouter = () => {
   return (
@@ -21,7 +20,6 @@ const AppRouter = () => {
       <Route path="/login" element={<Loginpage />} />
       <Route path="/signup" element={<Signuppage />} />
       <Route path="/user" element={<Userpage />} />
-      <Route path="/blog" element={<Blogpage />} />
       <Route path="/mockapi" element={<MockAPI />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
