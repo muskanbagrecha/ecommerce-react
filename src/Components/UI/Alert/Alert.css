@@ -1,6 +1,6 @@
 .alert{
     z-index: 10;
-    position: absolute;
+    position: fixed;
     top: 6rem;
     min-width: 20rem;
     height: 3rem;
@@ -8,6 +8,12 @@
     padding: 1rem 1rem;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.alert::before{
+    background-color: none;
+    color: none;
+    border: none;
 }
 
 .alert > *{

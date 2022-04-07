@@ -147,7 +147,6 @@ const Signupform = () => {
     }, 2000);
   }, [showAlert.showAlert]);
 
-  
   return (
     <main className="signup__container">
       {showAlert.showAlert && <Alert />}

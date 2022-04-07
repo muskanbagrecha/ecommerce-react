@@ -22,6 +22,7 @@ const useFetch = ({ url, method, ...rest }) => {
           setError(response.statusText);
         }
       } catch (err) {
+        console.log(err)
         setError(err);
         setLoading(false);
       }

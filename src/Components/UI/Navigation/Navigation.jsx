@@ -2,16 +2,24 @@ import React from "react";
 import { useState } from "react";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Cart, User, Wishlist, Search } from "../../../Assets/Icons/icons";
-import { useFilter, useAuth, useCart, useWishlist } from "../../../CustomHooks";
+import {
+  useFilter,
+  useAuth,
+  useCart,
+  useWishlist,
+  useAlert,
+} from "../../../CustomHooks";
 import logo from "../../../Assets/Images/logo.png";
 import "./Navigation.css";
 
 const Navigation = () => {
   const { filterState, filterDispatch } = useFilter();
   const { authState, authDispatch } = useAuth();
-  const { cartState } = useCart();
-  const { wishlistState } = useWishlist();
+  const { cartState, resetCart } = useCart();
+  const { wishlistState, resetWishlist } = useWishlist();
   const { isAuthenticated, user } = authState;
+  const { setShowAlert } = useAlert();
+
   //For responsiveness of navbar
   const [mobileNavActive, setMobileNavActive] = useState(false);
   const navActiveClass = mobileNavActive ? "navigation-full--active" : "";
@@ -34,6 +42,13 @@ const Navigation = () => {
   const logoutHandler = () => {
     authDispatch({ type: "LOGOUT" });
     localStorage.removeItem("user");
+    setShowAlert({
+      showAlert: true,
+      alertMessage: "Logged out successfully!",
+      type: "info",
+    });
+    resetCart();
+    resetWishlist();
     if (pathname === "/user") {
       navigate("/");
     }

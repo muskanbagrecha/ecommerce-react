@@ -1,5 +1,5 @@
 import { Filter } from "../../Components/Productpage/";
-import { useFilter } from "../../CustomHooks/useFilter";
+import { useFilter, useCart, useAuth, useWishlist } from "../../CustomHooks/";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ProductList from "../../Components/Productpage/ProductListing/ProductList";
@@ -10,9 +10,21 @@ import "./Productpage.css";
 
 const Productpage = () => {
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { getCartItems } = useCart();
+  const { getWishlistItems } = useWishlist();
   const { filterState, filterDispatch } = useFilter();
   const { showModal } = useModal();
+
+  const {
+    authState: { token, isAuthenticated },
+  } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      getCartItems({ token });
+      getWishlistItems({ token });
+    }
+  }, [token]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +41,7 @@ const Productpage = () => {
           });
         }
       } catch (err) {
-        setError(err);
+        console.log(err);
       } finally {
         setLoading(false);
       }
@@ -96,7 +108,6 @@ const Productpage = () => {
       ) : (
         <ProductList products={products} />
       )}
-      {error ? <p className="red">{error}</p> : null}
       {filterState.search && (
         <p className="search-result">
           Showing results for - {filterState.search}

@@ -42,7 +42,9 @@ const Product = ({ product }) => {
   const addToCartHandler = () => {
     if (authState.isAuthenticated) {
       addToCart({ product, token: authState.token });
+      console.log(authState.token);
       if (error) {
+        console.log(error)
         setShowAlert({
           showAlert: true,
           alertMessage: error,
@@ -103,7 +105,7 @@ const Product = ({ product }) => {
     } else {
       setShowModal(true);
     }
-  }
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -161,9 +163,7 @@ const Product = ({ product }) => {
                   navigate("/cart");
                 }}
               >
-                <span>
-                Go to Cart
-                </span>
+                <span>Go to Cart</span>
                 <Cart />
               </button>
             ) : (

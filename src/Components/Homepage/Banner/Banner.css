@@ -10,7 +10,7 @@
     flex-direction: column;
     justify-content: center;
     color: var(--color-white);
-    padding: 5rem;
+    padding: 2rem;
 }
 
 @media screen and (max-width: 1280px) {

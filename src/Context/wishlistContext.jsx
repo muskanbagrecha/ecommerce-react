@@ -11,6 +11,30 @@ export const WishlistProvider = ({ children }) => {
   const [loader, setLoader] = useState(null);
   const [error, setError] = useState(null);
 
+  const getWishlistItems = async ({token}) => {
+    try {
+      setLoader(true);
+      const response = await axios.get(
+        "api/user/wishlist",
+        {
+          headers: {
+            authorization: token,
+          },
+        }
+      );
+      if (response.status === 200 || response.status === 201) {
+        setWishlistState({
+          ...wishlistState,
+          items: response.data.wishlist,
+        });
+      }
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoader(false);
+    }
+  }
+
   const addToWishlist = async ({ product, token }) => {
     try {
       setLoader(true);
@@ -54,18 +78,23 @@ export const WishlistProvider = ({ children }) => {
       }
     } catch (err) {
       setError(err);
-    }
-    finally{
-        setLoader(false);
+    } finally {
+      setLoader(false);
     }
   };
+
+  const resetWishlist = () => {
+    setWishlistState(initialState);
+  }
 
   return (
     <WishlistContext.Provider
       value={{
         wishlistState,
+        getWishlistItems,
         addToWishlist,
         removeFromWishlist,
+        resetWishlist,
       }}
     >
       {children}

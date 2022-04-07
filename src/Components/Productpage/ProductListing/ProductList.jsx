@@ -7,9 +7,10 @@ const ProductList = ({ products }) => {
   const [paginatedData, setPaginatedData] = useState(products);
   const [currentPage, setCurrentPage] = useState(1);
   const { showAlert, setShowAlert } = useAlert();
+  const limit = 6;
 
   const nextPage = () => {
-    if (currentPage < products.length / 6) {
+    if (currentPage < products.length / limit) {
       setPaginatedData(products);
       setCurrentPage((prev) => prev + 1);
     }
@@ -22,8 +23,8 @@ const ProductList = ({ products }) => {
   };
 
   const paginate = () => {
-    const startIndex = (currentPage - 1) * 6;
-    const endIndex = startIndex + 6;
+    const startIndex = (currentPage - 1) * limit;
+    const endIndex = startIndex + limit;
     setPaginatedData((prev) => prev.slice(startIndex, endIndex));
   };
 
@@ -49,9 +50,15 @@ const ProductList = ({ products }) => {
   return (
     <div className="products__list-container">
       {showAlert.showAlert && <Alert />}
-      {paginatedData?.map((product) => {
-        return <Product key={product._id} product={product} />;
-      })}
+      {paginatedData?.length === 0 ? (
+        <h1>
+          No products found. 
+        </h1>
+      ) : (
+        paginatedData.map((product) => {
+          return <Product key={product._id} product={product} />;
+        })
+      )}
 
       {/* Pagination  */}
       <section className="pagination">
