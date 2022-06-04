@@ -1,4 +1,4 @@
-function Search(props) {
+export function Search(props) {
   return (
     <svg width="1.25em" height="1.25em" viewBox="0 0 24 24" {...props}>
       <path
@@ -9,7 +9,18 @@ function Search(props) {
   );
 }
 
-function Cart(props) {
+export function Pencil(props) {
+  return (
+    <svg width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+      <path
+        fill="currentColor"
+        d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83l3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25Z"
+      ></path>
+    </svg>
+  );
+}
+
+export function Cart(props) {
   return (
     <svg width="1.5em" height="1.5em" viewBox="0 0 24 24" {...props}>
       <path
@@ -20,7 +31,7 @@ function Cart(props) {
   );
 }
 
-function Wishlist(props) {
+export function Wishlist(props) {
   return (
     <svg width="1.25em" height="1.5em" viewBox="0 0 24 24" {...props}>
       <path
@@ -31,7 +42,7 @@ function Wishlist(props) {
   );
 }
 
-function User(props) {
+export function User(props) {
   return (
     <svg width="1.5em" height="1.5em" viewBox="0 0 24 24" {...props}>
       <path
@@ -42,7 +53,7 @@ function User(props) {
   );
 }
 
-function Eye(props) {
+export function Eye(props) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 24 24" {...props}>
       <path
@@ -52,8 +63,7 @@ function Eye(props) {
     </svg>
   );
 }
-
-function EyeClose(props) {
+export function EyeClose(props) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 256 256" {...props}>
       <path
@@ -64,7 +74,7 @@ function EyeClose(props) {
   );
 }
 
-function LeftArrow(props) {
+export function LeftArrow(props) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 24 24" {...props}>
       <path
@@ -75,7 +85,7 @@ function LeftArrow(props) {
   );
 }
 
-function RightArrow(props) {
+export function RightArrow(props) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 24 24" {...props}>
       <path
@@ -86,7 +96,7 @@ function RightArrow(props) {
   );
 }
 
-function OutlinedHeart(props) {
+export function OutlinedHeart(props) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 24 24" {...props}>
       <path
@@ -97,7 +107,7 @@ function OutlinedHeart(props) {
   );
 }
 
-function SolidHeart(props) {
+export function SolidHeart(props) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 24 24" {...props}>
       <path
@@ -108,7 +118,7 @@ function SolidHeart(props) {
   );
 }
 
-function ChevronRight(props) {
+export function ChevronRight(props) {
   return (
     <svg width="1em" height="1em" viewBox="0 0 24 24" {...props}>
       <path
@@ -119,16 +129,61 @@ function ChevronRight(props) {
   );
 }
 
-export {
-  Search,
-  Cart,
-  Wishlist,
-  User,
-  Eye,
-  EyeClose,
-  LeftArrow,
-  RightArrow,
-  OutlinedHeart,
-  SolidHeart,
-  ChevronRight,
-};
+export function Success(props) {
+  return (
+    <svg width="1.4em" height="1.4em" viewBox="0 0 36 36" {...props}>
+      <path
+        fill="currentColor"
+        d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2Zm10.45 10.63L15.31 25.76L7.55 18a1.4 1.4 0 0 1 2-2l5.78 5.78l11.14-11.13a1.4 1.4 0 1 1 2 2Z"
+        className="clr-i-solid clr-i-solid-path-1"
+      ></path>
+      <path fill="none" d="M0 0h36v36H0z"></path>
+    </svg>
+  );
+}
+
+export function Danger(props) {
+  return (
+    <svg width="1.4em" height="1.4em" viewBox="-2 -3 24 24" {...props}>
+      <path
+        fill="currentColor"
+        d="m12.8 1.613l6.701 11.161c.963 1.603.49 3.712-1.057 4.71a3.213 3.213 0 0 1-1.743.516H3.298C1.477 18 0 16.47 0 14.581c0-.639.173-1.264.498-1.807L7.2 1.613C8.162.01 10.196-.481 11.743.517c.428.276.79.651 1.057 1.096zM10 14a1 1 0 1 0 0-2a1 1 0 0 0 0 2zm0-9a1 1 0 0 0-1 1v4a1 1 0 0 0 2 0V6a1 1 0 0 0-1-1z"
+      ></path>
+    </svg>
+  );
+}
+
+export function Info(props) {
+  return (
+    <svg width="1.4em" height="1.4em" viewBox="0 0 24 24" {...props}>
+      <path
+        fill="currentColor"
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"
+      ></path>
+    </svg>
+  );
+}
+
+export function Warning(props) {
+  return (
+    <svg width="1.4em" height="1.4em" viewBox="0 0 24 24" {...props}>
+      <path
+        fill="currentColor"
+        d="M1 21h22L12 2L1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"
+      ></path>
+    </svg>
+  );
+}
+
+export function Cancel(props) {
+  return (
+    <svg width="1.4em" height="1.4em" viewBox="0 0 15 15" {...props}>
+      <path
+        fill="currentColor"
+        fillRule="evenodd"
+        d="M11.782 4.032a.575.575 0 1 0-.813-.814L7.5 6.687L4.032 3.218a.575.575 0 0 0-.814.814L6.687 7.5l-3.469 3.468a.575.575 0 0 0 .814.814L7.5 8.313l3.469 3.469a.575.575 0 0 0 .813-.814L8.313 7.5l3.469-3.468Z"
+        clipRule="evenodd"
+      ></path>
+    </svg>
+  );
+}

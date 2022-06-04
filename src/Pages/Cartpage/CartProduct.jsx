@@ -1,125 +1,37 @@
 import { useState, useEffect } from "react";
-import { useCart, useAuth, useAlert, useWishlist } from "../../CustomHooks";
+import { useCart, useWishlist } from "../../CustomHooks";
+import {
+  updateCartHandler,
+  removeFromCartHandler,
+  addToWishlistHandler,
+} from "../../Utils";
 import { Card } from "../../Components/UI";
 import { FaStar } from "react-icons/fa";
 import "./CartProduct.css";
 export const CartProduct = ({ product }) => {
   const { title, subtitle, price, oldPrice, image, discount, rating } = product;
-  const [isDisabled, setIsDisabled] = useState(false);
+  const [isCartDisabled, setIsCartDisabled] = useState(false);
+  const [isWishlistDisabled, setIsWishlistDisabled] = useState(false);
   const { cartState, updateCart, removeFromCart, error } = useCart();
-  const { showAlert, setShowAlert } = useAlert();
-  const { authState } = useAuth();
-  const { wishlistState, addToWishlist } = useWishlist();
-  const existsInWishlist = wishlistState.items.some(
-    (item) => item._id === product._id
-  );
+  const { addToWishlist } = useWishlist();
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsDisabled(false);
+    const id = setTimeout(() => {
+      setIsCartDisabled(false);
     }, 1000);
-  }, [isDisabled]);
+    return () => {
+      clearTimeout(id);
+    };
+  }, [isCartDisabled]);
 
   useEffect(() => {
-    setTimeout(() => {
-      setShowAlert({
-        showAlert: false,
-        alertMessage: null,
-        type: null,
-      });
-    }, 2000);
-  }, [showAlert.showAlert]);
-
-  const qtyIncrementHandler = () => {
-    updateCart({
-      product,
-      type: "increment",
-      token: authState.token,
-    });
-    setIsDisabled(true);
-    if (error) {
-      setShowAlert({
-        showAlert: true,
-        alertMessage: error,
-        type: "danger",
-      });
-    } else {
-      setShowAlert({
-        showAlert: true,
-        alertMessage: "Quantity Increased Successfully!",
-        type: "success",
-      });
-    }
-  };
-
-  const qtyDecrementHandler = () => {
-    updateCart({
-      product,
-      type: "decrement",
-      token: authState.token,
-    });
-    setIsDisabled(true);
-    if (error) {
-      setShowAlert({
-        showAlert: true,
-        alertMessage: error,
-        type: "danger",
-      });
-    } else {
-      setShowAlert({
-        showAlert: true,
-        alertMessage: "Quantity Decreased Successfully!",
-        type: "success",
-      });
-    }
-  };
-
-  const deleteCartItemHandler = () => {
-    removeFromCart({ product, token: authState.token });
-    if (error) {
-      setShowAlert({
-        showAlert: true,
-        alertMessage: error,
-        type: "danger",
-      });
-    } else {
-      setShowAlert({
-        showAlert: true,
-        alertMessage: "Item Deleted Successfully!",
-        type: "success",
-      });
-    }
-  };
-
-  const moveToWishlistHandler = () => {
-    if (!existsInWishlist) {
-      addToWishlist({
-        product,
-        token: authState.token,
-      });
-      deleteCartItemHandler();
-      if (error) {
-        setShowAlert({
-          showAlert: true,
-          alertMessage: error,
-          type: "danger",
-        });
-      } else {
-        setShowAlert({
-          showAlert: true,
-          alertMessage: "Product added to wishlist successfully!",
-          type: "success",
-        });
-        setIsDisabled(true);
-      }
-    } else {
-      setShowAlert({
-        showAlert: true,
-        alertMessage: "Product already exists in wishlist!",
-        type: "danger",
-      });
-    }
-  };
+    const id = setTimeout(() => {
+      setIsWishlistDisabled(false);
+    }, 1000);
+    return () => {
+      clearTimeout(id);
+    };
+  }, [isWishlistDisabled]);
 
   return (
     <Card className="card-horizontal cart-card">
@@ -145,29 +57,52 @@ export const CartProduct = ({ product }) => {
         <div className="card__quantity">
           <span
             className={`btn-icon ${
-              product.qty === 1 || isDisabled ? "disabled" : ""
+              product.qty === 1 || isCartDisabled ? "disabled" : ""
             } `}
-            onClick={qtyDecrementHandler}
+            onClick={() =>
+              updateCartHandler(
+                { product, type: "decrement" },
+                updateCart,
+                setIsCartDisabled
+              )
+            }
           >
             <i className="fa-solid fa-minus"></i>
           </span>
           <span className="quantity">
             {cartState.items.find((item) => item.id === product.id).qty}
           </span>
-          <span className="btn-icon" onClick={qtyIncrementHandler}>
+          <span
+            className={`btn-icon ${isCartDisabled ? "disabled" : ""}`}
+            onClick={() =>
+              updateCartHandler(
+                { product, type: "increment" },
+                updateCart,
+                setIsCartDisabled
+              )
+            }
+          >
             <i className="fa-solid fa-plus"></i>
           </span>
         </div>
         <div className="card__CTA">
           <button
             className="btn btn-primary full-width"
-            onClick={moveToWishlistHandler}
+            onClick={() =>
+              addToWishlistHandler(
+                product,
+                addToWishlist,
+                setIsWishlistDisabled
+              )
+            }
           >
             Wishlist
           </button>
           <button
             className="btn btn-outline full-width"
-            onClick={() => deleteCartItemHandler()}
+            onClick={() =>
+              removeFromCartHandler(product, removeFromCart, setIsCartDisabled)
+            }
           >
             Remove Item
           </button>

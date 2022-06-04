@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useCart } from "../../CustomHooks";
 import { CouponContainer } from "./CouponContainer";
 export const PriceContainer = () => {
@@ -9,7 +10,7 @@ export const PriceContainer = () => {
   const totalDiscount = cartState.items.reduce((acc, curr) => {
     return acc + (curr.oldPrice - curr.price) * curr.qty;
   }, 0);
-
+  const navigate = useNavigate();
   return (
     <div className="price__container">
       <h5>
@@ -38,7 +39,10 @@ export const PriceContainer = () => {
         </li>
       </ul>
       <div className="CTA__container">
-        <button className="btn btn-primary full-width">
+        <button
+          className="btn btn-primary full-width"
+          onClick={() => navigate("/address")}
+        >
           Proceed to Checkout
         </button>
       </div>

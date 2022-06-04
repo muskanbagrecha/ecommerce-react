@@ -1,12 +1,12 @@
 import LoginForm from "./LoginForm";
+import { useTitle } from "../../CustomHooks";
 import "./Loginpage.css";
 
-const Loginpage = () => {
+export const Loginpage = () => {
+  useTitle("Login");
   return (
     <div className="sub-container">
       <LoginForm />
     </div>
   );
 };
-
-export default Loginpage;

@@ -1,73 +1,25 @@
+import { useState } from "react";
 import { Card } from "../../Components/UI";
 import { FaStar } from "react-icons/fa";
 import { SolidHeart, Cart } from "../../Assets/Icons/icons";
-import { useAuth, useAlert, useCart, useWishlist } from "../../CustomHooks/";
+import { useCart, useWishlist } from "../../CustomHooks/";
+import {
+  removeFromWishlistHandler,
+  addToCartHandler,
+  updateCartHandler,
+} from "../../Utils";
 
 export const WishlistProduct = ({ product }) => {
   const { title, subtitle, price, oldPrice, image, discount, rating, inStock } =
     product;
 
-  const { authState } = useAuth();
-  const { removeFromWishlist, error } = useWishlist();
-  const { setShowAlert } = useAlert();
+  const { removeFromWishlist } = useWishlist();
+  const [isCartDisabled, setIsCartDisabled] = useState(false);
+  const [isWishlistDisabled, setIsWishlistDisabled] = useState(false);
   const { cartState, addToCart, updateCart } = useCart();
   const itemExistsInCart = cartState.items.some(
     (item) => item._id === product._id
   );
-  const removeFromWishlistHandler = () => {
-    removeFromWishlist({ product, token: authState.token });
-    if (error) {
-      setShowAlert({
-        showAlert: true,
-        alertMessage: error,
-        type: "danger",
-      });
-    } else {
-      setShowAlert({
-        showAlert: true,
-        alertMessage: "Product removed from wishlist successfully!",
-        type: "success",
-      });
-    }
-  };
-
-  const addToCartHandler = () => {
-    addToCart({ product, token: authState.token });
-    if (error) {
-      setShowAlert({
-        showAlert: true,
-        alertMessage: error,
-        type: "danger",
-      });
-    } else {
-      setShowAlert({
-        showAlert: true,
-        alertMessage: "Product added to cart successfully!",
-        type: "success",
-      });
-    }
-  };
-
-  const updateCartHandler = () => {
-    updateCart({
-      product,
-      type: "increment",
-      token: authState.token,
-    });
-    if (error) {
-      setShowAlert({
-        showAlert: true,
-        alertMessage: error,
-        type: "danger",
-      });
-    } else {
-      setShowAlert({
-        showAlert: true,
-        alertMessage: "Quantity Increased Successfully!",
-        type: "success",
-      });
-    }
-  };
 
   return (
     <Card className="card-vertical product-card">
@@ -102,8 +54,13 @@ export const WishlistProduct = ({ product }) => {
             <button
               className="btn btn-primary full-width"
               onClick={() => {
-                removeFromWishlistHandler();
-                itemExistsInCart ? updateCartHandler() : addToCartHandler();
+                itemExistsInCart
+                  ? updateCartHandler(
+                      { product, type: "increment" },
+                      updateCart,
+                      setIsCartDisabled
+                    )
+                  : addToCartHandler(product, addToCart, setIsCartDisabled);
               }}
             >
               Add to Cart
@@ -111,7 +68,13 @@ export const WishlistProduct = ({ product }) => {
             </button>
             <button
               className="btn btn-outline full-width"
-              onClick={removeFromWishlistHandler}
+              onClick={() => {
+                removeFromWishlistHandler(
+                  product,
+                  removeFromWishlist,
+                  setIsWishlistDisabled
+                );
+              }}
             >
               Remove
             </button>

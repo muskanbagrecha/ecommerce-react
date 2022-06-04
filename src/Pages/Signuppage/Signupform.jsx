@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { Eye } from "../../Assets/Icons/icons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useAuth, useModal, useAlert } from "../../CustomHooks";
-import { Alert } from "../../Components/UI";
+import { useAuth, useModal, useToast } from "../../CustomHooks";
 import axios from "axios";
 
 const Signupform = () => {
@@ -23,10 +22,13 @@ const Signupform = () => {
   };
 
   const { pathname } = useLocation();
+  const { addSuccessToast, addDangerToast, addInfoToast } = useToast();
   const navigate = useNavigate();
-  const { authState, authDispatch } = useAuth();
+  const {
+    authState: { isAuthenticated },
+    authDispatch,
+  } = useAuth();
   const [signupDetails, setSignupDetails] = useState(intialState);
-  const { showAlert, setShowAlert } = useAlert();
   const [showPassword, setShowPassword] = useState({
     password: false,
     confirmPassword: false,
@@ -114,11 +116,7 @@ const Signupform = () => {
       if (response.status === 201) {
         setSignupDetails(intialState);
         authDispatch({ type: "SIGNUP", payload: response.data });
-        setShowAlert({
-          showAlert: true,
-          alertMessage: "Account created successfully!",
-          type: "success",
-        });
+        addSuccessToast("Account created successfully!");
       }
     } catch (err) {
       console.log(err);
@@ -133,23 +131,17 @@ const Signupform = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      setShowAlert({
-        showAlert: false,
-        message: null,
-        type: null,
-      });
-      if (authState.isAuthenticated) {
+      if (isAuthenticated) {
         if (pathname === "/signup") {
           navigate("/products");
         }
         setShowModal(false);
       }
     }, 2000);
-  }, [showAlert.showAlert]);
+  }, [isAuthenticated]);
 
   return (
     <main className="signup__container">
-      {showAlert.showAlert && <Alert />}
       <form className="input-form" autoComplete="on" onSubmit={submitHandler}>
         <h3>Signup</h3>
         <label className="label" htmlFor="first-name">

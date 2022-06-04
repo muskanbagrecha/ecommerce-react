@@ -110,6 +110,19 @@ button.btn-link-text {
     pointer-events: none;
 }
 
+.btn-black-no-br:hover{
+    background: var(--color-primary);
+    color: var(--color-light);
+}
+
+.mx-1{
+    margin: 0 1rem;
+}
+
+.m-auto{
+    margin: auto;
+}
+
 @media screen and (max-width: 800px) {
     .styled-title {
         font-size: 2rem;

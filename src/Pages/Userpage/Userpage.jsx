@@ -1,14 +1,14 @@
-import { useAuth } from "../../CustomHooks";
+import { useAuth, useTitle } from "../../CustomHooks";
 import { UserProfile } from "./UserProfile";
 import "./Userpage.css";
-const Userpage = () => {
+export const Userpage = () => {
   const {
     authState: { user },
   } = useAuth();
-
+  useTitle(user ? `${user.firstName}'s Profile` : "Profile");
   return (
     <div className="sub-container">
-      <h1 className="styled-title">Hi, {user.firstName}</h1>
+      <h1 className="styled-title">Hi, {user?.firstName}</h1>
       <div className="bordered-container user-container">
         <aside className="user-profile-aside">
           <ul className="no-list-style">
@@ -24,5 +24,3 @@ const Userpage = () => {
     </div>
   );
 };
-
-export default Userpage;

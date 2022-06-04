@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { useAuth, useAlert, useCart, useWishlist } from "../../CustomHooks/";
+import { useAuth, useToast, useCart, useWishlist } from "../../CustomHooks/";
 
 export const UserProfile = () => {
+  const { addInfoToast } = useToast();
   const navigate = useNavigate();
-  const { setShowAlert } = useAlert();
   const {
     authState: {
       user: { firstName, lastName, email },
@@ -19,11 +19,7 @@ export const UserProfile = () => {
       type: "LOGOUT",
     });
     localStorage.removeItem("user");
-    setShowAlert({
-      showAlert: true,
-      alertMessage: "Logged out successfully!",
-      type: "info",
-    });
+    addInfoToast("Logged out successfully");
     resetCart();
     resetWishlist();
     navigate(-1);

@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const AlertContext = createContext({
   showAlert: false,
@@ -12,6 +12,17 @@ export const AlertProvider = ({ children }) => {
     alertMessage: null,
     type: null,
   });
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      setShowAlert({
+        setShowAlert: false,
+        alertMessage: null,
+        type: null,
+      });
+    }, 3000);
+    return () => clearTimeout(id);
+  }, [showAlert.showAlert]);
 
   return (
     <AlertContext.Provider value={{ showAlert, setShowAlert }}>

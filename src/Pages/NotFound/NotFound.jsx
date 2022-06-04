@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
-
-const NotFound = (props) => {
+import { useTitle } from "../../CustomHooks";
+export const NotFound = () => {
   const navigate = useNavigate();
-
+  useTitle("404");
   return (
     <div className="sub-container flex-col-center">
       <h1>404</h1>
@@ -16,5 +16,3 @@ const NotFound = (props) => {
     </div>
   );
 };
-
-export default NotFound;

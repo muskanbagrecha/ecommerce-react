@@ -1,9 +1,11 @@
-import { useCart, useAuth } from "../../CustomHooks";
+import { useCart, useAuth, useTitle } from "../../CustomHooks";
 import { CartProduct } from "./CartProduct";
 import { PriceContainer } from "./PriceContainer";
 import { Link } from "react-router-dom";
 import "./Cartpage.css";
-const Cartpage = () => {
+
+export const Cartpage = () => {
+  useTitle("Cart");
   const { cartState } = useCart();
   const totalUniqueCartItems = cartState.items.length;
   const cartCards = cartState.items.map((product) => {
@@ -33,16 +35,14 @@ const Cartpage = () => {
             </Link>
           </div>
         ))}
-        {!isAuthenticated && (
-          <div className="cart__empty-container">
-            <p>Please login to view your cart</p>
-            <Link to="/login">
-              <button className="btn btn-primary">Login</button>
-            </Link>
-          </div>
-        )}
+      {!isAuthenticated && (
+        <div className="cart__empty-container">
+          <p>Please login to view your cart</p>
+          <Link to="/login">
+            <button className="btn btn-primary">Login</button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
-
-export default Cartpage;
