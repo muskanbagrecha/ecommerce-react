@@ -5,5 +5,15 @@ import Card from "./Card/Card";
 import Section from "./Section/Section";
 import Alert from "./Alert/Alert";
 import Modal from "./Modal/Modal";
+// import RazorpayPayment from "./RazorpayPayment/RazorpayPayment";
 
-export { Navigation, Footer, Card, Carousel, Section, Alert, Modal };
+export {
+  Navigation,
+  Footer,
+  Card,
+  Carousel,
+  Section,
+  Alert,
+  Modal,
+  // RazorpayPayment,
+};

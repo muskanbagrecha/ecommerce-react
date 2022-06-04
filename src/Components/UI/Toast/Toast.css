@@ -1,0 +1,108 @@
+:root {
+    --primary-danger-bg: rgb(248, 224, 222);
+    --primary-danger-text: rgb(255, 0, 0);
+    --primary-success-bg: rgb(220, 247, 232);
+    --primary-success-text: rgb(2, 126, 56);
+    --primary-warning-bg: rgb(254, 251, 230);
+    --primary-warning-text: rgb(233, 175, 59);
+    --primary-info-bg: rgb(230, 247, 255);
+    --primary-info-text: rgb(0, 64, 133);
+    --secondary-toast-bg: rgb(226, 227, 229);
+    --secondary-toast-text: rgb(56, 61, 65);
+  }
+  
+  .toast__container {
+    box-sizing: border-box;
+    position: fixed;
+    top: 5rem;
+    right: 1rem;
+    z-index: 6;
+  }
+  
+  .toast {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    padding: 10px 1rem;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: var(--fsize-300);
+    font-weight: 400;
+    margin: 1rem 0;
+    transition: 0.3s ease;
+    opacity: 0.8;
+    width: 25rem;
+    animation: toast-enter 0.2s;
+  }
+  
+  .toast:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  .toast__icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 1rem;
+  }
+  
+  .toast__title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    text-align: left;
+    margin: 5px 0;
+  }
+  
+  .toast__message {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1.1rem;
+  }
+  
+  .toast-success {
+    background-color: var(--primary-success-bg);
+    color: var(--primary-success-text);
+  }
+  
+  .toast-danger {
+    background-color: var(--primary-danger-bg);
+    color: var(--primary-danger-text);
+  }
+  
+  .toast-warning {
+    background-color: var(--primary-warning-bg);
+    color: var(--primary-warning-text);
+  }
+  
+  .toast-info {
+    background-color: var(--primary-info-bg);
+    color: var(--primary-info-text);
+  }
+  
+  .toast__CTA {
+    position: absolute;
+    right: 3px;
+    top: 3px;
+  }
+  
+  @keyframes toast-enter {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes toast-exit {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(100%);
+    }
+  }
+  

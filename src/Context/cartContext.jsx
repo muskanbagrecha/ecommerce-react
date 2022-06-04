@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import { useAuth } from "../CustomHooks";
+import { useAuth, useModal, useToast } from "../CustomHooks";
 const initialState = {
   items: [],
 };
@@ -12,19 +12,21 @@ export const CartProvider = ({ children }) => {
   const [cartState, setCartState] = useState(initialState);
   const [loader, setLoader] = useState(null);
   const [error, setError] = useState(null);
-  const token = localStorage.getItem("user")?.token;
 
   const {
-    authState: { isAuthenticated },
+    authState: { isAuthenticated, token },
   } = useAuth();
 
+  const { setShowModal } = useModal();
+  const { addSuccessToast, addDangerToast, addInfoToast } = useToast();
+
   useEffect(() => {
-    if (token) {
+    if (isAuthenticated) {
       getCartItems({
         token,
       });
     }
-  }, [cartState, isAuthenticated]);
+  }, [cartState.items.length, isAuthenticated]);
 
   const getCartItems = async ({ token }) => {
     setLoader(true);
@@ -38,43 +40,47 @@ export const CartProvider = ({ children }) => {
         ...cartState,
         items: res.data.cart,
       });
-      setLoader(false);
     } catch (err) {
-      setLoader(false);
       setError(err.response.data.message);
       console.log(err.response);
-    }
-  };
-
-  const addToCart = async ({ product, token }) => {
-    try {
-      setLoader(true);
-      const response = await axios.post(
-        "api/user/cart",
-        {
-          product,
-        },
-        {
-          headers: {
-            authorization: token,
-          },
-        }
-      );
-      if (response.status === 200 || response.status === 201) {
-        setCartState({
-          ...cartState,
-          items: response.data.cart,
-        });
-      }
-    } catch (err) {
-      console.log(err.response);
-      setError(err);
     } finally {
       setLoader(false);
     }
   };
 
-  const updateCart = async ({ product, type, token }) => {
+  const addToCart = async (product) => {
+    if (!isAuthenticated) {
+      setShowModal(true);
+    } else {
+      try {
+        const response = await axios.post(
+          "/api/user/cart",
+          {
+            product,
+          },
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        );
+        if (response.status === 200 || response.status === 201) {
+          setCartState({
+            ...cartState,
+            items: response.data.cart,
+          });
+          addSuccessToast("Product added to cart successfully!");
+        }
+      } catch (err) {
+        console.log(err);
+        addDangerToast("Something went wrong!");
+      } finally {
+        setLoader(false);
+      }
+    }
+  };
+
+  const updateCart = async (product, type) => {
     try {
       setLoader(true);
       const response = await axios.post(
@@ -95,16 +101,20 @@ export const CartProvider = ({ children }) => {
           ...cartState,
           items: response.data.cart,
         });
+        type === "increment"
+          ? addSuccessToast("Product quantity increased successfully!")
+          : addInfoToast("Product quantity decreased successfully!");
       }
     } catch (err) {
       console.log(error.response);
+      addDangerToast("Something went wrong!");
       setError(err);
     } finally {
       setLoader(false);
     }
   };
 
-  const removeFromCart = async ({ product, token }) => {
+  const removeFromCart = async (product) => {
     try {
       setLoader(true);
       const response = await axios.delete(`api/user/cart/${product._id}`, {
@@ -117,9 +127,11 @@ export const CartProvider = ({ children }) => {
           ...cartState,
           items: response.data.cart,
         });
+        addInfoToast("Product removed from cart successfully!");
       }
     } catch (err) {
       console.log(error.response);
+      addDangerToast("Something went wrong!");
       setError(err);
     } finally {
       setLoader(false);

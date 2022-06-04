@@ -1,14 +1,21 @@
-import { Filter } from "../../Components/Productpage/";
-import { useFilter, useCart, useAuth, useWishlist } from "../../CustomHooks/";
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useState, useEffect } from "react";
+import { Filter } from "../../Components/Productpage/";
+import {
+  useFilter,
+  useCart,
+  useAuth,
+  useWishlist,
+  useTitle,
+  useModal,
+} from "../../CustomHooks/";
 import ProductList from "../../Components/Productpage/ProductListing/ProductList";
 import { LoginModal } from "../Loginpage/LoginModal";
-import { useModal } from "../../CustomHooks/useModal";
 import spinner from "../../Assets/loader";
 import "./Productpage.css";
 
-const Productpage = () => {
+export const Productpage = () => {
+  useTitle("Product");
   const [loading, setLoading] = useState(true);
   const { getCartItems } = useCart();
   const { getWishlistItems } = useWishlist();
@@ -24,7 +31,7 @@ const Productpage = () => {
       getCartItems({ token });
       getWishlistItems({ token });
     }
-  }, [token]);
+  }, [isAuthenticated]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -117,5 +124,3 @@ const Productpage = () => {
     </div>
   );
 };
-
-export default Productpage;

@@ -5,10 +5,12 @@ import {
   Testimonial,
 } from "../../Components/Homepage";
 import { Carousel, Section } from "../../Components/UI";
+import { useTitle } from "../../CustomHooks";
 import brandData from "../../backend/db/brands";
 import testimonialData from "../../backend/db/testimonial";
 
-const Homepage = () => {
+export const Homepage = () => {
+  useTitle("Homepage");
   return (
     <div className="sub-container">
       <Hero />
@@ -24,4 +26,3 @@ const Homepage = () => {
     </div>
   );
 };
-export default Homepage;

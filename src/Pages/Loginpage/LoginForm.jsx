@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Eye } from "../../Assets/Icons/icons";
-import { useModal, useAuth, useAlert } from "../../CustomHooks/";
+import { useModal, useAuth, useToast } from "../../CustomHooks/";
 import axios from "axios";
 
 const LoginForm = (props) => {
@@ -9,7 +9,7 @@ const LoginForm = (props) => {
   const { authDispatch } = useAuth();
   const { setShowModal } = useModal();
   const { pathname } = useLocation();
-  const { setShowAlert } = useAlert();
+  const { addSuccessToast } = useToast();
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loginDetails, setLoginDetails] = useState({
@@ -48,11 +48,7 @@ const LoginForm = (props) => {
         if (pathname === "/products") {
           setShowModal(false);
         }
-        setShowAlert({
-          showAlert: true,
-          alertMessage: "Logged in successfully!",
-          type: "success",
-        });
+        addSuccessToast("Login Successful");
         navigate("/products");
       }
     } catch (err) {
@@ -70,8 +66,8 @@ const LoginForm = (props) => {
   const testLogin = () => {
     setLoginDetails({
       ...loginDetails,
-      email: "adarshbalika@gmail.com",
-      password: "adarshBalika123",
+      email: "muskanbagrecha@gmail.com",
+      password: "muskanbagrecha123",
     });
   };
 

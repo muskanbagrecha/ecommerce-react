@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { useWishlist, useAuth } from "../../CustomHooks/";
+import { useWishlist, useAuth, useTitle } from "../../CustomHooks/";
 import { WishlistProduct } from "./WishlistProduct";
 import { Link } from "react-router-dom";
 import "./Wishlistpage.css";
 
-const Wishlistpage = () => {
+export const Wishlistpage = () => {
+  useTitle("Wishlist");
   const { wishlistState } = useWishlist();
   const { items } = wishlistState;
   const totalWishlistItems = wishlistState.items.length;
@@ -41,5 +41,3 @@ const Wishlistpage = () => {
     </div>
   );
 };
-
-export default Wishlistpage;

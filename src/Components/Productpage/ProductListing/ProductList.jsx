@@ -1,12 +1,10 @@
 import Product from "./Product";
 import { useState, useEffect } from "react";
-import { useAlert } from "../../../CustomHooks/useAlert";
 import { Alert } from "../../UI";
 
 const ProductList = ({ products }) => {
   const [paginatedData, setPaginatedData] = useState(products);
   const [currentPage, setCurrentPage] = useState(1);
-  const { showAlert, setShowAlert } = useAlert();
   const limit = 6;
 
   const nextPage = () => {
@@ -37,23 +35,10 @@ const ProductList = ({ products }) => {
     paginate();
   }, [products]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setShowAlert({
-        showAlert: false,
-        alertMessage: null,
-        type: null,
-      });
-    }, 2000);
-  }, [showAlert.showAlert]);
-
   return (
     <div className="products__list-container">
-      {showAlert.showAlert && <Alert />}
       {paginatedData?.length === 0 ? (
-        <h1>
-          No products found. 
-        </h1>
+        <h1>No products found.</h1>
       ) : (
         paginatedData.map((product) => {
           return <Product key={product._id} product={product} />;

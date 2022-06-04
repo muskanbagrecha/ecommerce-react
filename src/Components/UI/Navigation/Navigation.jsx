@@ -7,18 +7,18 @@ import {
   useAuth,
   useCart,
   useWishlist,
-  useAlert,
+  useToast,
 } from "../../../CustomHooks";
 import logo from "../../../Assets/Images/logo.png";
 import "./Navigation.css";
 
 const Navigation = () => {
+  const { addInfoToast } = useToast();
   const { filterState, filterDispatch } = useFilter();
   const { authState, authDispatch } = useAuth();
   const { cartState, resetCart } = useCart();
   const { wishlistState, resetWishlist } = useWishlist();
   const { isAuthenticated, user } = authState;
-  const { setShowAlert } = useAlert();
 
   //For responsiveness of navbar
   const [mobileNavActive, setMobileNavActive] = useState(false);
@@ -28,7 +28,7 @@ const Navigation = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const totalCartItems = cartState.items.reduce((acc, curr) => {
+  const totalCartItems = cartState?.items.reduce((acc, curr) => {
     return acc + curr.qty;
   }, 0);
   const totalWishlistItems = wishlistState.items.length;
@@ -42,11 +42,7 @@ const Navigation = () => {
   const logoutHandler = () => {
     authDispatch({ type: "LOGOUT" });
     localStorage.removeItem("user");
-    setShowAlert({
-      showAlert: true,
-      alertMessage: "Logged out successfully!",
-      type: "info",
-    });
+    addInfoToast("Logged out successfully");
     resetCart();
     resetWishlist();
     if (pathname === "/user") {
@@ -96,14 +92,14 @@ const Navigation = () => {
               </i>
             ) : (
               <span className="avatar avatar-xs avatar-text">
-                {user.firstName[0] + user.lastName[0]}
+                {user?.firstName.slice(0, 1) + user?.lastName.slice(0, 1)}
               </span>
             )}
           </NavLink>
           <nav className="user--hover">
             {isAuthenticated ? (
               <div>
-                <Link to="/user">Welcome, {user.firstName}</Link>
+                <Link to="/user">Welcome, {user?.firstName}</Link>
                 <hr />
                 <Link to="/cart">Cart</Link>
                 <br />

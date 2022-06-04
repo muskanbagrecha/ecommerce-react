@@ -1,0 +1,10 @@
+export { Addresspage } from "./Addresspage/Addresspage";
+export { NotFound } from "./NotFound/NotFound";
+export { Productpage } from "./Productpage/Productpage";
+export { Signuppage } from "./Signuppage/Signuppage";
+export { Userpage } from "./Userpage/Userpage";
+export { Wishlistpage } from "./Wishlistpage/Wishlistpage";
+export { Loginpage } from "./Loginpage/Loginpage";
+export { Homepage } from "./Homepage/Homepage";
+export { Cartpage } from "./Cartpage/Cartpage";
+export { SingleProductPage } from "./SingleProductPage/SingleProductPage";
